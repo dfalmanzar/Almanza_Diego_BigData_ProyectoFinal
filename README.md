@@ -5,7 +5,7 @@ Pipeline de Big Data completo (CRISP-DM, ETL, OLAP, Machine Learning, MongoDB, r
 
 **Pregunta de negocio.** ¿Dónde es más densa la violencia armada organizada en el mundo y cómo ha cambiado el homicidio en Colombia? ¿Se puede estimar, a partir de dónde, cuándo y con qué arma ocurrió un homicidio, a qué tipo de violencia pertenece (conflicto armado, crimen organizado y sicariato, riñas o delincuencia común)?
 
-**Versión en línea:** _(pegar aquí la URL de Streamlit Community Cloud)_
+**Versión en línea:** https://violencia-armada-dfalmanza.streamlit.app
 
 **Video de sustentación:** _(pegar aquí el enlace al video)_
 
