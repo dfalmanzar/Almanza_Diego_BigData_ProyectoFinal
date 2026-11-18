@@ -7,7 +7,7 @@ Pipeline de Big Data completo (CRISP-DM, ETL, OLAP, Machine Learning, MongoDB, r
 
 **Versión en línea:** https://violencia-armada-dfalmanza.streamlit.app
 
-**Video de sustentación:** _(pegar aquí el enlace al video)_
+**Video de sustentación:** https://fundacionlibertadores-my.sharepoint.com/:v:/r/personal/dfalmanzar_libertadores_edu_co/_layouts/15/stream.aspx?id=%2Fpersonal%2Fdfalmanzar_libertadores_edu_co%2FDocuments%2FGrabaciones%2FSustentaci%C3%B3n%20Proyecto%20Final-20261118_142214-Grabaci%C3%B3n%20de%20la%20reuni%C3%B3n.mp4&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&share=cQrFitqTYfKwSJvRgqMLMAypEgUCbcMy09nY8zbpc4TyGzq3zg
 
 ## Datos
 Fuentes oficiales y públicas, sin datos sintéticos:
