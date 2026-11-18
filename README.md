@@ -29,6 +29,30 @@ Aplicación Streamlit en http://localhost:8501 con cinco secciones: **Resumen** 
 | ![Resumen con el mapamundi](evidencias/capturas/resumen_mapa.png) | ![Página del modelo](evidencias/capturas/modelo.png) |
 | ![Detalle de un país](evidencias/capturas/resumen_tooltip.png) | ![Visualizaciones de Colombia](evidencias/capturas/visualizaciones_colombia.png) |
 
+## Arquitectura
+```mermaid
+flowchart LR
+    subgraph fuentes["Fuentes oficiales"]
+        U["UCDP GED 26.1<br/>+ Candidate 2026"]
+        H["Homicidios MinDefensa<br/>datos.gov.co"]
+    end
+    subgraph docker["docker compose up --build"]
+        P["pipeline<br/>descarga · notebook · mapa<br/>(se ejecuta y termina)"]
+        V[("Volúmenes<br/>data/raw · data/processed<br/>models · reports")]
+        M[("mongo<br/>documento de análisis")]
+        A["app<br/>Streamlit :8501"]
+        J["procesamiento<br/>JupyterLab :8888"]
+    end
+    U --> P
+    H --> P
+    P -->|Parquet, modelo, PDF| V
+    P -->|insights| M
+    V --> A
+    M -->|insights| A
+    J -.->|explora| V
+```
+Tres servicios base (procesamiento, MongoDB y app) más el servicio `pipeline`, que ejecuta el procesamiento una vez y termina. El procesamiento escribe Parquet, modelo y PDF en volúmenes e inserta los insights en MongoDB; la app solo lee esos resultados (no repite el ETL ni reentrena). Orden de arranque: `mongo` (sano) → `pipeline` (termina con código 0) → `app`.
+
 ## Requisitos
 - Docker Desktop (o Docker Engine) con Docker Compose v2
 - Unos 2 GB libres de RAM para los contenedores y 1 GB de disco para los datos
