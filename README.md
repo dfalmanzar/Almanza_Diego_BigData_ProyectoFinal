@@ -139,7 +139,3 @@ Almanza_Diego_BigData_ProyectoFinal/
 **Solución.**
 - Después de `spark.stop()`, cerrar el puente Py4J y terminar el proceso Java (`SparkContext._gateway.shutdown()` y `proc.kill()`). El notebook imprime la memoria de Java antes y después para dejar la evidencia.
 - Limitar el Random Forest a `n_jobs=4` para reducir el pico de memoria del entrenamiento.
-
-### 3. Puerto 27017 ocupado (previsto)
-
-El contenedor de MongoDB de la Actividad 1 usa el puerto 27017 del equipo. Para evitar el choque, este proyecto publica Mongo en el 27018 (configurable con `MONGO_PUERTO_HOST`).
