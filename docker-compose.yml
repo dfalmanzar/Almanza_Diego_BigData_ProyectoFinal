@@ -57,6 +57,8 @@ services:
         condition: service_healthy
     environment:
       JUPYTER_TOKEN: ${JUPYTER_TOKEN}
+      # Solo para publicar en la nube: src/subir_a_atlas.py copia el análisis a MongoDB Atlas
+      ATLAS_URI: ${ATLAS_URI:-}
       # Dentro de la red de Docker, Mongo se encuentra por el nombre del servicio
       MONGO_URI: mongodb://${MONGO_USUARIO}:${MONGO_CLAVE}@mongo:27017/
       MONGO_BD: ${MONGO_BD}
@@ -92,6 +94,7 @@ services:
       - ./reports:/proyecto/reports:ro
       # Código montado para ver los cambios al guardar durante el desarrollo
       - ./app:/proyecto/app
+      - ./.streamlit:/proyecto/.streamlit:ro
       - ./src:/proyecto/src:ro
 
 volumes:

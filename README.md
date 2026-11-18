@@ -5,6 +5,8 @@ Pipeline de Big Data completo (CRISP-DM, ETL, OLAP, Machine Learning, MongoDB, r
 
 **Pregunta de negocio.** ¿Dónde es más densa la violencia armada organizada en el mundo y cómo ha cambiado el homicidio en Colombia? ¿Se puede estimar, a partir de dónde, cuándo y con qué arma ocurrió un homicidio, a qué tipo de violencia pertenece (conflicto armado, crimen organizado y sicariato, riñas o delincuencia común)?
 
+**Versión en línea:** _(pegar aquí la URL de Streamlit Community Cloud)_
+
 **Video de sustentación:** _(pegar aquí el enlace al video)_
 
 ## Datos
@@ -103,12 +105,31 @@ Almanza_Diego_BigData_ProyectoFinal/
 │   └── processed/           # Parquet limpio y mapa_mundo.json
 ├── notebooks/
 │   └── Almanza_Diego_BigData_ProyectoFinal.ipynb
-├── src/                     # pipeline.py, descarga, ETL, modelo, OLAP, mapa y PDF
+├── .streamlit/config.toml   # Tema y fuentes del dashboard (lo usan Docker y Streamlit Cloud)
+├── src/                     # pipeline.py, descarga, ETL, modelo, OLAP, mapa, PDF y subir_a_atlas.py
 ├── models/                  # Modelo entrenado
 ├── reports/                 # Reporte PDF y figuras
 ├── evidencias/              # Logs de docker compose y capturas del dashboard
 └── app/                     # Dashboard Streamlit: app.py, tema.py, datos.py, paginas/, componentes/ (mapa), static/ (fuentes y marca)
 ```
+
+## Versión publicada (opcional)
+Además de la ejecución con Docker que pide la guía, el dashboard se publica en **Streamlit Community Cloud** para verlo sin instalar nada:
+
+| Pieza | Local (Docker) | Publicada |
+|---|---|---|
+| Dashboard | servicio `app` | Streamlit Community Cloud, desde este repositorio (`app/app.py`) |
+| Insights | MongoDB del contenedor `mongo` | MongoDB Atlas (clúster gratuito M0), con el mismo documento copiado por `src/subir_a_atlas.py` |
+| Modelo | `models/`, generado por el pipeline | El mismo archivo `.joblib`, publicado como *Release* de GitHub y descargado por la app la primera vez (`MODELO_URL`) |
+| Datos procesados | `data/processed/` | Los mismos Parquet del repositorio |
+
+La app lee la configuración de las variables de entorno (Docker) o de los *secrets* de Streamlit Cloud (`MONGO_URI`, `MONGO_BD`, `MODELO_URL`); ninguna credencial está en el código. Tanto Docker como Streamlit Cloud ejecutan `streamlit run app/app.py` desde la raíz del repositorio, donde está `.streamlit/config.toml` (tema y fuentes).
+
+Para actualizar el documento en Atlas después de volver a ejecutar el pipeline:
+```bash
+docker compose exec procesamiento python src/subir_a_atlas.py
+```
+(requiere `ATLAS_URI` en el `.env`).
 
 ## Problemas de infraestructura documentados
 ### 1. Docker Desktop no arranca: sockets huérfanos que Windows no deja borrar

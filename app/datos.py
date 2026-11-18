@@ -8,6 +8,7 @@ import base64
 import json
 import os
 import sys
+import urllib.request
 from pathlib import Path
 
 import joblib
@@ -66,9 +67,28 @@ def metadatos_modelo():
     return json.loads((MODELOS / "metadatos_modelo.json").read_text(encoding="utf-8"))
 
 
-@st.cache_resource(show_spinner=False)
+def configuracion(nombre, defecto=None):
+    """Lee un valor de las variables de entorno (Docker) o de los secrets de Streamlit Community Cloud."""
+    valor = os.environ.get(nombre)
+    if valor:
+        return valor
+    try:
+        return st.secrets.get(nombre, defecto)
+    except Exception:  # sin archivo de secrets (p. ej. dentro de Docker)
+        return defecto
+
+
+@st.cache_resource(show_spinner="Descargando el modelo entrenado (solo la primera vez)…")
 def modelo_entrenado():
-    return joblib.load(MODELOS / "modelo_categoria_violencia.joblib")
+    """Modelo guardado por el notebook. En la nube no está en el repositorio (76 MB): se descarga una vez del
+    Release de GitHub indicado en MODELO_URL. Es el mismo archivo, así que las métricas no cambian."""
+    ruta = MODELOS / "modelo_categoria_violencia.joblib"
+    url = configuracion("MODELO_URL")
+    if not ruta.exists() and url:
+        temporal = ruta.with_suffix(".descarga")
+        urllib.request.urlretrieve(url, temporal)
+        temporal.replace(ruta)
+    return joblib.load(ruta)
 
 
 @st.cache_data(show_spinner=False)
@@ -79,12 +99,12 @@ def panel_ucdp():
 @st.cache_data(ttl=300, show_spinner=False)
 def documento_analisis():
     """Último documento de análisis guardado en MongoDB. Devuelve (documento, error)."""
-    uri = os.environ.get("MONGO_URI")
+    uri = configuracion("MONGO_URI")
     if not uri:
         return None, "La app no tiene la variable MONGO_URI. Ejecútela con docker compose para conectarse a MongoDB."
     try:
         with MongoClient(uri, serverSelectionTimeoutMS=4000) as cliente:
-            doc = cliente[os.environ.get("MONGO_BD", "violencia_armada")]["analisis"].find_one(
+            doc = cliente[configuracion("MONGO_BD", "violencia_armada")]["analisis"].find_one(
                 {"metadata.proyecto": "violencia-armada"}, sort=[("metadata.fecha_analisis", -1)])
     except Exception as error:  # se muestra al visitante con la forma de recuperarse
         return None, f"No fue posible conectarse a MongoDB ({type(error).__name__}). Verifique que el servicio mongo esté activo."

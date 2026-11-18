@@ -2,6 +2,7 @@
 # Credenciales: el .env real NUNCA se sube (solo .env.example)
 # ---------------------------------------------------------------
 .env
+.streamlit/secrets.toml
 
 # ---------------------------------------------------------------
 # Datos crudos (~400 MB): no se suben; los descarga
