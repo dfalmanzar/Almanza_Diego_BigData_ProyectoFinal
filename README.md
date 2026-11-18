@@ -35,7 +35,7 @@ Aplicación Streamlit en http://localhost:8501 con cinco secciones: **Resumen** 
 ## Cómo ejecutar
 1. Clonar el repositorio y copiar las credenciales de ejemplo (luego cambiar los valores dentro de `.env`):
    ```bash
-   git clone https://github.com/<usuario>/Almanza_Diego_BigData_ProyectoFinal.git
+   git clone https://github.com/dfalmanzar/Almanza_Diego_BigData_ProyectoFinal.git
    cd Almanza_Diego_BigData_ProyectoFinal
    cp .env.example .env
    ```
