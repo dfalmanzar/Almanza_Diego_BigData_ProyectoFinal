@@ -1,4 +1,4 @@
-"""Resumen: el mapamundi de áreas reales y las cifras clave del mundo y de Colombia."""
+"""Resumen: el mapamundi de áreas reales y los indicadores clave del mundo, de Colombia y del modelo."""
 
 import streamlit as st
 import streamlit.components.v1 as components
@@ -43,6 +43,21 @@ partes = "".join(f'<i style="width:{participacion.loc[completo, c]:.2f}%;color:{
 leyenda = "".join(f'<span style="--c:{tema.CATEGORIAS[c]}">{c} · {tema.decimal(participacion.loc[completo, c])} %</span>'
                   for c in orden if c in participacion.columns)
 st.markdown(f'<div class="composicion">{partes}</div><div class="leyenda-c">{leyenda}</div>', unsafe_allow_html=True)
+
+# Indicadores clave del modelo (la guía pide KPIs del dataset y del modelo en el Resumen)
+meta = datos.metadatos_modelo()
+m, base = meta["metricas_prueba"], meta["linea_base"]
+st.header("Qué tan bien clasifica el modelo")
+st.markdown(f'<p class="entrada">Un {meta["algoritmo"]} estima a cuál de cuatro tipos de violencia pertenece un homicidio. '
+            f'Se entrenó con {meta["periodo_entrenamiento"]} y se evaluó con homicidios que nunca vio ({meta["periodo_prueba"]}).</p>',
+            unsafe_allow_html=True)
+tema.cifras([
+    (tema.decimal(m["f1_macro"], 2), f"F1 macro, frente a {tema.decimal(base['f1_macro'], 2)} de la línea base"),
+    (f"+{tema.decimal(m['f1_macro'] - base['f1_macro'], 2)}", "de mejora sobre la línea base (meta: +0,10, se cumple)"),
+    (f"{tema.decimal(m['accuracy'] * 100, 0)} %", "de aciertos totales en la prueba"),
+    (tema.decimal(m["recall · Conflicto armado"], 2), "de los homicidios del conflicto armado que reconoce (meta: 0,50, no se cumple)"),
+], roja=3)
+st.page_link("paginas/modelo.py", label="Ver la comparación de modelos y probar una predicción")
 
 st.header("Lo que muestran los datos")
 documento, error = datos.documento_analisis()
