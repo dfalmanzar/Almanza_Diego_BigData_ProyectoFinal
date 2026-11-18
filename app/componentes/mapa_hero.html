@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:"Chakra Petch";font-weight:600;src:url(data:font/ttf;base64,__FUENTE_CHAKRA_600__) format("truetype")}
+@font-face{font-family:"Chakra Petch";font-weight:700;src:url(data:font/ttf;base64,__FUENTE_CHAKRA_700__) format("truetype")}
+@font-face{font-family:"Barlow";font-weight:400;src:url(data:font/ttf;base64,__FUENTE_BARLOW_400__) format("truetype")}
+@font-face{font-family:"Barlow";font-weight:600;src:url(data:font/ttf;base64,__FUENTE_BARLOW_600__) format("truetype")}
+@font-face{font-family:"Martian Mono";font-weight:100 800;font-stretch:75% 112.5%;src:url(data:font/ttf;base64,__FUENTE_MARTIAN__) format("truetype")}
+__TOKENS__
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--tinta);color:var(--blanco);font:400 14px/1.45 Barlow,system-ui,sans-serif;overflow:hidden}
+::selection{background:var(--rojo);color:var(--tinta)}
+
+/* ---------- cifras monumentales ---------- */
+.cifras{display:grid;grid-template-columns:1fr 1.15fr 1fr;border-top:1px solid var(--filete);border-bottom:1px solid var(--filete)}
+.cifra{padding:14px 22px 12px;position:relative;min-height:112px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px}
+.cifra + .cifra{border-left:1px solid var(--filete)}
+.cifra output{font:700 clamp(40px,5vw,76px)/0.86 "Chakra Petch",sans-serif;letter-spacing:-0.01em;font-variant-numeric:tabular-nums;display:block;white-space:nowrap}
+.cifra p{color:var(--gris-3);font-size:13.5px;max-width:34ch}
+.cifra p b{color:var(--blanco);font-weight:600}
+.cifra.plano{background:var(--rojo);color:var(--tinta);overflow:hidden}
+.cifra.plano p{color:var(--tinta)}
+.cifra.plano p b{color:var(--tinta)}
+.cifra.plano::after{content:"";position:absolute;right:-12%;top:-30%;width:2px;height:170%;background:var(--tinta);transform:rotate(38deg);opacity:.85;transform-origin:center}
+.cifra .pais{font:600 15px "Chakra Petch",sans-serif;letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- mapa ---------- */
+.lienzo{position:relative;margin-top:10px}
+canvas{display:block;width:100%}
+#tip{position:absolute;pointer-events:none;min-width:220px;max-width:280px;background:var(--tinta);border:1px solid var(--filete-2);
+  padding:12px 14px;opacity:0;transform:translateY(6px);transition:opacity .18s cubic-bezier(.16,1,.3,1),transform .18s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 18px 40px -12px rgba(0,0,0,.9)}
+#tip.visible{opacity:1;transform:translateY(0)}
+#tip h3{font:700 20px/1.05 "Chakra Petch",sans-serif;margin-bottom:8px}
+#tip .tasa{font:700 30px/1 "Chakra Petch",sans-serif;color:var(--rojo)}
+#tip .tasa small{font:400 12px Barlow,sans-serif;color:var(--gris-3);margin-left:4px}
+#tip dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin-top:10px;font-size:12.5px}
+#tip dt{color:var(--gris-2)} #tip dd{font-family:"Martian Mono",monospace;text-align:right}
+.panel{position:absolute;left:0;bottom:6%;width:min(250px,22%);border-top:1px solid var(--filete-2);padding-top:10px}
+.panel h2{font:600 13px "Chakra Petch",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-3);margin-bottom:8px}
+.panel ol{list-style:none;counter-reset:r}
+.panel li{display:grid;grid-template-columns:18px 1fr auto;gap:6px;align-items:baseline;font-size:12.5px;padding:4px 0;border-bottom:1px solid var(--tinta-2)}
+.panel li::before{counter-increment:r;content:counter(r);font:600 12px "Martian Mono",monospace;color:var(--gris-1)}
+.panel li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.panel li b{font:600 12.5px "Martian Mono",monospace;color:var(--rojo)}
+.panel .barra{grid-column:2/4;height:4px;background:repeating-linear-gradient(90deg,var(--rojo-2) 0 4px,transparent 4px 5px);
+  transform-origin:left;transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.leyenda{display:flex;flex-direction:column;gap:6px;align-items:flex-end;margin-bottom:6px}
+.leyenda h2{font:600 12px "Chakra Petch",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-3)}
+.leyenda ul{list-style:none;display:flex;gap:2px}
+.leyenda li{display:flex;flex-direction:column;align-items:center;gap:4px;font:400 10px "Martian Mono",monospace;color:var(--gris-2);width:54px;white-space:nowrap}
+.leyenda i{display:block;width:54px;height:10px}
+.leyenda .foco{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--gris-3)}
+.leyenda .foco i{width:8px;height:8px;background:var(--rojo);outline:1px solid var(--blanco);outline-offset:2px}
+
+/* ---------- regla de años ---------- */
+.regla{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:end;margin-top:6px;padding-top:14px;border-top:1px solid var(--filete)}
+.regla-pista{position:relative;height:62px}
+.marcas{position:absolute;inset:0 0 22px 0}
+.marca{position:absolute;bottom:0;width:1px;height:8px;background:var(--filete-2)}
+.marca.mayor{height:16px;background:var(--gris-1)}
+.etq{position:absolute;bottom:-20px;transform:translateX(-50%);font:500 11.5px "Martian Mono",monospace;color:var(--gris-2)}
+.etq.inicio{transform:none}.etq.fin{transform:translateX(-100%)}
+.rango{position:absolute;bottom:22px;height:4px;background:var(--rojo);transition:left .25s cubic-bezier(.16,1,.3,1),width .25s cubic-bezier(.16,1,.3,1)}
+.rango::before,.rango::after{content:"";position:absolute;bottom:-6px;width:2px;height:22px;background:var(--rojo);transform:skewX(-30deg)}
+.rango::before{left:-1px}.rango::after{right:-1px}
+.asa{position:absolute;bottom:34px;transform:translateX(-50%);font:700 15px "Chakra Petch",sans-serif;padding:2px 6px;background:var(--tinta);border:1px solid var(--filete-2);
+  transition:left .25s cubic-bezier(.16,1,.3,1),border-color .2s}
+.asa.foco{border-color:var(--blanco);outline:2px solid var(--rojo);outline-offset:2px}
+.regla input{position:absolute;inset:auto 0 12px 0;width:100%;height:34px;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none;background:none;pointer-events:none}
+.regla input::-webkit-slider-thumb{pointer-events:auto;width:26px;height:34px;-webkit-appearance:none;cursor:grab}
+.regla input::-moz-range-thumb{pointer-events:auto;width:26px;height:34px;cursor:grab;border:0}
+.periodo{display:flex;flex-direction:column;gap:10px;align-items:flex-end;padding-bottom:4px}
+.periodo p{font-size:12.5px;color:var(--gris-3);text-align:right;max-width:34ch}
+.accion{display:inline-flex;align-items:center;gap:16px;padding:12px 16px 12px 20px;background:var(--blanco);color:var(--tinta);
+  font:600 14px "Chakra Petch",sans-serif;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;
+  transition:background .25s,color .25s}
+.accion svg{width:22px;height:22px}
+.accion:hover,.accion:focus-visible{background:var(--rojo);color:var(--tinta)}
+.accion:focus-visible{outline:2px solid var(--blanco);outline-offset:3px}
+.nota{font-size:11.5px;color:var(--gris-2);margin-top:8px}
+@media (max-width:860px){
+  .cifras{grid-template-columns:1fr}
+  .cifra{min-height:0;padding:16px 4px 14px}
+  .cifra + .cifra{border-left:0;border-top:1px solid var(--filete)}
+  .cifra.plano{padding:16px 14px}
+  .cifra output{font-size:clamp(40px,12vw,64px)}
+  .panel{position:static;width:100%;margin-top:14px}
+  .regla{grid-template-columns:1fr;gap:18px}
+  .periodo{align-items:flex-start}.periodo p{text-align:left}
+  .leyenda{align-items:flex-start}
+  .leyenda li{width:calc((100vw - 32px) / 7 - 2px)}.leyenda i{width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="raiz">
+  <section class="cifras" aria-label="Cifras del periodo">
+    <div class="cifra"><output id="c-eventos">0</output><p>eventos de violencia organizada registrados por UCDP entre <b class="txt-periodo"></b></p></div>
+    <div class="cifra plano"><span class="pais" id="c-pais"></span><output id="c-tasa">0</output><p>muertes por cada 1.000 km²: el país con la violencia más densa entre <b class="txt-periodo"></b></p></div>
+    <div class="cifra"><output id="c-muertes">0</output><p>muertes estimadas en el mundo entre <b class="txt-periodo"></b></p></div>
+  </section>
+
+  <div class="lienzo" id="lienzo">
+    <canvas id="mapa" role="img" aria-label="Mapamundi en proyección de áreas iguales con la violencia organizada por país"></canvas>
+    <div id="tip" role="tooltip"></div>
+    <div class="panel"><h2>Más muertes por km²</h2><ol id="ranking"></ol></div>
+  </div>
+
+  <div class="regla">
+    <div class="regla-pista" id="pista">
+      <div class="marcas" id="marcas"></div>
+      <div class="rango" id="rango"></div>
+      <span class="asa" id="asa-desde"></span><span class="asa" id="asa-hasta"></span>
+      <input type="range" id="desde" aria-label="Año inicial del periodo">
+      <input type="range" id="hasta" aria-label="Año final del periodo">
+    </div>
+    <div class="periodo">
+      <div class="leyenda">
+        <h2>Muertes por cada 1.000 km²</h2>
+        <ul id="escala"></ul>
+        <span class="foco"><i></i>Foco: zona de 1° con más muertes</span>
+      </div>
+      <a class="accion" href="__URL_DATOS__" target="_top">Explorar los datos
+        <svg viewBox="0 0 22 22" aria-hidden="true"><path d="M3 19 L19 3" stroke="currentColor" stroke-width="2" fill="none"/></svg></a>
+      <p class="nota">Fuente: UCDP GED 26.1 y Candidate 2026. Proyección Equal Earth: cada país con su área real. 2026* es parcial (hasta septiembre).</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const D = __DATOS__;
+const M = D.mapa, ANIOS = M.anios, A0 = ANIOS[0];
+const CORTES = [0.1, 1, 5, 20, 100];                       // muertes por 1.000 km²
+// Paleta cerrada: se lee de los tokens del tema (tema.tokens_css) para no salir de la rampa
+const estilo = getComputedStyle(document.documentElement), tk = n => estilo.getPropertyValue("--" + n).trim();
+const NIVELES = [                                          // [color celda, densidad del dither]
+  [tk("filete"), 1], [tk("filete-2"), 1], [tk("gris-1"), .86], [tk("gris-2"), .9],
+  [tk("rojo-3"), .93], [tk("rojo-2"), .97], [tk("rojo"), 1]];
+const ETIQ = ["0", "<0,1", "0,1–1", "1–5", "5–20", "20–100", "≥100"];
+const APAGADA = tk("tinta-2"), FONDO = tk("tinta");
+const reducir = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fmt = new Intl.NumberFormat("es-CO"), fmt1 = new Intl.NumberFormat("es-CO", {minimumFractionDigits: 1, maximumFractionDigits: 1});
+
+const rutas = M.paises.map(p => new Path2D(p.ruta));
+let periodo = D.periodo.slice();
+let tasas = [], niveles = [], celdas = [], focos = [], hover = -1, hoverFoco = null, escala = 1, cel = 4;
+const lienzo = document.getElementById("lienzo"), cv = document.getElementById("mapa"), cx = cv.getContext("2d");
+const ids = document.createElement("canvas"), ix = ids.getContext("2d", {willReadFrequently: true});
+let sinCeldas = [], idPixels = null, W = 0, H = 0, dpr = Math.max(1, window.devicePixelRatio || 1);
+
+function nivelDe(t){ if (!(t > 0)) return 0; let n = 1; for (const c of CORTES) if (t >= c) n++; return n; }
+
+function calcular(){
+  const i0 = periodo[0] - A0, i1 = periodo[1] - A0;
+  let eventos = 0, muertes = 0;
+  tasas = M.paises.map(p => { let m = 0, e = 0; for (let i = i0; i <= i1; i++){ m += p.muertes[i]; e += p.eventos[i]; }
+    eventos += e; muertes += m; return {m, e, t: p.area_km2 > 0 ? m / p.area_km2 * 1000 : 0}; });
+  niveles = tasas.map(t => nivelDe(t.t));
+  const agg = new Map();
+  for (const [x, y, a, m, lugar, pais] of M.focos){ if (a < periodo[0] || a > periodo[1]) continue;
+    const k = x + "," + y, f = agg.get(k); if (f) f.m += m; else agg.set(k, {x, y, m, lugar, pais}); }
+  focos = [...agg.values()].sort((a, b) => b.m - a.m).slice(0, 16);
+  focos.forEach((f, i) => f.fase = i * 0.37);
+  return {eventos, muertes};
+}
+
+/* ---------- cifras con contador ---------- */
+const valores = {};
+function contar(id, destino, dec){
+  const el = document.getElementById(id), desde = valores[id] || 0; valores[id] = destino;
+  const f = dec ? fmt1 : fmt;
+  if (reducir){ el.textContent = f.format(destino); return; }
+  const t0 = performance.now(), dur = 1100;
+  (function paso(t){ const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(2, -10 * p);
+    el.textContent = f.format(desde + (destino - desde) * (p >= 1 ? 1 : e)); if (p < 1) requestAnimationFrame(paso); })(t0);
+}
+function actualizarTextos(tot){
+  const txt = periodo[0] === periodo[1] ? `${etiquetaAnio(periodo[0])}` : `${periodo[0]} y ${etiquetaAnio(periodo[1])}`;
+  document.querySelectorAll(".txt-periodo").forEach(e => e.textContent = txt);
+  contar("c-eventos", tot.eventos, false); contar("c-muertes", tot.muertes, false);
+  const orden = tasas.map((t, i) => [t.t, i]).sort((a, b) => b[0] - a[0]);
+  const [tmax, imax] = orden[0];
+  document.getElementById("c-pais").textContent = M.paises[imax].nombre;
+  contar("c-tasa", tmax, true);
+  const ol = document.getElementById("ranking"); ol.innerHTML = "";
+  orden.slice(0, 5).forEach(([t, i]) => { const li = document.createElement("li");
+    li.innerHTML = `<span>${M.paises[i].nombre}</span><b>${fmt1.format(t)}</b><i class="barra" style="transform:scaleX(0)"></i>`;
+    ol.appendChild(li); requestAnimationFrame(() => requestAnimationFrame(() => li.querySelector(".barra").style.transform = `scaleX(${Math.max(.04, t / tmax)})`)); });
+}
+function etiquetaAnio(a){ return a > M.anio_ultimo_completo ? a + "*" : String(a); }
+
+/* ---------- rejilla de celdas ---------- */
+function preparar(){
+  W = lienzo.clientWidth; escala = W / M.ancho; H = Math.round(M.alto * escala);
+  cel = W >= 700 ? 5 : 4;                                  // 4 px de tinta + 1 px de separación, como las tramas del tema
+  cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + "px"; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ids.width = W; ids.height = H; ix.setTransform(escala, 0, 0, escala, 0, 0); ix.clearRect(0, 0, M.ancho, M.alto);
+  rutas.forEach((r, i) => { const n = i + 1; ix.fillStyle = `rgb(${n & 255},${n >> 8},0)`; ix.fill(r); });
+  idPixels = ix.getImageData(0, 0, W, H).data;
+  celdas = [];
+  for (let y = 0; y < H; y += cel) for (let x = 0; x < W; x += cel){
+    const px = Math.min(W - 1, x + (cel >> 1)), py = Math.min(H - 1, y + (cel >> 1)), o = (py * W + px) * 4;
+    if (idPixels[o + 3] < 250) continue;
+    const p = idPixels[o] + (idPixels[o + 1] << 8) - 1; if (p < 0 || p >= M.paises.length) continue;
+    // en los bordes el suavizado mezcla dos países y da un ID falso: se confirma con la geometría
+    if (!ix.isPointInPath(rutas[p], px + .5, py + .5)) continue;
+    celdas.push({x, y, p, r: Math.random(), d: Math.random(), de: null, a: null, t0: 0});
+  }
+  // países demasiado pequeños para tener celdas (Palestina, Líbano…): una celda marcada en su centro
+  const conCeldas = new Set(celdas.map(c => c.p));
+  sinCeldas = M.paises.map((_, i) => i).filter(i => !conCeldas.has(i));
+  // textura de puntos desfasados en el océano
+  capaFondo.width = W * dpr; capaFondo.height = H * dpr;
+  const fx = capaFondo.getContext("2d"); fx.setTransform(dpr, 0, 0, dpr, 0, 0); fx.fillStyle = tk("filete");
+  for (let y = 6, fila = 0; y < H; y += 12, fila++) for (let x = (fila % 2) * 6 + 3; x < W; x += 12){
+    if (idPixels[(y * W + x) * 4 + 3] < 10) fx.fillRect(x, y, 1, 1); }
+}
+const capaFondo = document.createElement("canvas");
+function marcadorPequeno(i){ const [x, y] = M.paises[i].centro; return {x: x * escala, y: y * escala}; }
+function idEn(x, y){
+  // ID por píxel, confirmado con la geometría; si falla, se busca entre las rutas
+  const o = (Math.floor(y) * W + Math.floor(x)) * 4, X = x * dpr, Y = y * dpr;
+  cx.save(); cx.setTransform(dpr * escala, 0, 0, dpr * escala, 0, 0);
+  let id = -1;
+  if (idPixels[o + 3] >= 10){ const p = idPixels[o] + (idPixels[o + 1] << 8) - 1;
+    if (p >= 0 && p < M.paises.length && cx.isPointInPath(rutas[p], X, Y)) id = p;
+    else id = rutas.findIndex(r => cx.isPointInPath(r, X, Y)); }
+  cx.restore(); return id;
+}
+function colorCelda(c, n){ const [col, dens] = NIVELES[n]; return c.r < dens ? col : APAGADA; }
+
+let animando = false, tInicio = 0, modo = "armar";
+function dibujar(t){
+  cx.clearRect(0, 0, W, H);
+  cx.drawImage(capaFondo, 0, 0, W, H);
+  const s = cel - 1;
+  let pendiente = false;
+  for (const c of celdas){
+    const n = niveles[c.p], destino = colorCelda(c, n);
+    let p = 1;
+    if (modo === "armar"){ const inicio = n * 150 + c.d * 700; p = reducir ? 1 : Math.min(1, Math.max(0, (t - tInicio - inicio) / 380)); }
+    else if (modo === "voltear" && c.de && c.de !== destino){ const inicio = c.d * 450; p = reducir ? 1 : Math.min(1, Math.max(0, (t - tInicio - inicio) / 320)); }
+    if (p < 1) pendiente = true;
+    if (modo === "armar"){ if (p <= 0) continue; const e = 1 - Math.pow(1 - p, 3), lado = s * e;
+      cx.fillStyle = destino; cx.fillRect(c.x + (s - lado) / 2, c.y + (s - lado) / 2, lado, lado); }
+    else if (modo === "voltear" && c.de && c.de !== destino && p < 1){
+      const viejo = p < .5, alto = s * Math.abs(1 - 2 * p);
+      cx.fillStyle = viejo ? c.de : destino; cx.fillRect(c.x, c.y + (s - alto) / 2, s, alto); }
+    else { cx.fillStyle = destino; cx.fillRect(c.x, c.y, s, s); }
+  }
+  // fronteras (capa precalculada): un filete del color del fondo separa cada país
+  cx.drawImage(capaFronteras, 0, 0, W, H);
+  const visible = modo !== "armar" || reducir || t - tInicio > 900;
+  // en pantallas angostas solo se marcan los países pequeños en rojo (≥ 5 muertes por 1.000 km²)
+  const minimo = W < 700 ? 5 : 2;
+  if (visible) for (const i of sinCeldas){ const n = niveles[i]; if (n < minimo) continue;
+    const {x, y} = marcadorPequeno(i), l = s + 1;
+    cx.fillStyle = NIVELES[n][0]; cx.fillRect(x - l / 2, y - l / 2, l, l);
+    if (n >= 5 || i === hover){ cx.strokeStyle = i === hover ? tk("blanco") : tk("gris-3"); cx.lineWidth = 1;
+      cx.strokeRect(x - l / 2 - 2.5, y - l / 2 - 2.5, l + 5, l + 5); } }
+  if (hover >= 0){ cx.save(); cx.setTransform(dpr * escala, 0, 0, dpr * escala, 0, 0);
+    cx.lineJoin = "round"; cx.strokeStyle = tk("blanco"); cx.lineWidth = 1.6 / escala; cx.stroke(rutas[hover]); cx.restore(); }
+  dibujarFocos(t);
+  return pendiente;
+}
+const capaFronteras = document.createElement("canvas");
+function prepararFronteras(){
+  capaFronteras.width = W * dpr; capaFronteras.height = H * dpr;
+  const fx = capaFronteras.getContext("2d"); fx.setTransform(dpr * escala, 0, 0, dpr * escala, 0, 0); fx.lineJoin = "round";
+  // frontera: una calle de tinta de 2 px con un filete de 1 px en el centro, encima de las celdas
+  fx.strokeStyle = FONDO; fx.lineWidth = 2.2 / escala; rutas.forEach(r => fx.stroke(r));
+  fx.strokeStyle = tk("gris-1"); fx.lineWidth = 1 / escala; rutas.forEach(r => fx.stroke(r));
+}
+function dibujarFocos(t){
+  const maxM = focos.length ? focos[0].m : 1;
+  const tam = Math.min(1, Math.max(.4, W / 1200));          // los focos se escalan con el mapa
+  for (const f of focos){
+    const x = f.x * escala, y = f.y * escala, k = Math.sqrt(f.m / maxM);
+    const ciclo = reducir ? 0.35 : ((t / 2200 + f.fase) % 1);
+    cx.globalAlpha = (1 - ciclo) * 0.85; cx.strokeStyle = tk("rojo"); cx.lineWidth = 1.2;
+    cx.beginPath(); cx.arc(x, y, (4 + ciclo * (10 + 16 * k)) * tam, 0, Math.PI * 2); cx.stroke(); cx.globalAlpha = 1;
+    const lado = (4 + 3 * k) * tam; cx.fillStyle = tk("rojo"); cx.fillRect(x - lado / 2, y - lado / 2, lado, lado);
+    cx.strokeStyle = tk("blanco"); cx.lineWidth = hoverFoco === f ? 1.6 : .8;
+    cx.strokeRect(x - lado / 2 - 2, y - lado / 2 - 2, lado + 4, lado + 4);
+  }
+}
+// Un solo ciclo de dibujo: arma, voltea o mantiene el mapa (con los focos latiendo)
+function bucle(t){
+  const pendiente = dibujar(t);
+  if (!pendiente && modo !== "estable"){ modo = "estable"; celdas.forEach(c => c.de = null); }
+  if (!reducir) requestAnimationFrame(bucle);
+}
+function redibujar(){ if (reducir) dibujar(performance.now()); }
+
+function aplicarPeriodo(animar){
+  const anteriores = celdas.map(c => colorCelda(c, niveles[c.p] ?? 0));
+  const tot = calcular(); actualizarTextos(tot); pintarRegla();
+  if (animar){ celdas.forEach((c, i) => c.de = anteriores[i]); modo = "voltear"; tInicio = performance.now(); }
+  redibujar();
+}
+
+/* ---------- tooltip ---------- */
+const tip = document.getElementById("tip");
+cv.addEventListener("pointermove", ev => {
+  const r = cv.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  // gana lo más cercano al cursor: un foco o la celda marcada de un país pequeño
+  const dist = (px, py) => Math.max(Math.abs(px - x), Math.abs(py - y));
+  let mejor = 9, chico = -1; hoverFoco = null;
+  for (const f of focos){ const d = dist(f.x * escala, f.y * escala); if (d < mejor){ mejor = d; hoverFoco = f; } }
+  for (const i of sinCeldas){ if (niveles[i] < (W < 700 ? 5 : 2)) continue; const m = marcadorPequeno(i), d = dist(m.x, m.y);
+    if (d < Math.min(mejor, 8)){ mejor = d; chico = i; hoverFoco = null; } }
+  let nuevo = -1;
+  if (!hoverFoco && x >= 0 && y >= 0 && x < W && y < H) nuevo = chico >= 0 ? chico : idEn(x, y);
+  hover = nuevo;
+  if (hoverFoco){
+    tip.innerHTML = `<h3>${hoverFoco.lugar || hoverFoco.pais}</h3><div class="tasa">${fmt.format(hoverFoco.m)}<small>muertes</small></div>
+      <dl><dt>País</dt><dd>${hoverFoco.pais}</dd><dt>Periodo</dt><dd>${periodo[0]}–${etiquetaAnio(periodo[1])}</dd><dt>Zona</dt><dd>celda de 1° × 1°</dd></dl>`;
+  } else if (hover >= 0){
+    const p = M.paises[hover], tt = tasas[hover], rango = tasas.filter(v => v.t > tt.t).length + 1;
+    tip.innerHTML = `<h3>${p.nombre}</h3><div class="tasa">${fmt1.format(tt.t)}<small>muertes por 1.000 km²</small></div>
+      <dl><dt>Muertes estimadas</dt><dd>${fmt.format(tt.m)}</dd><dt>Eventos</dt><dd>${fmt.format(tt.e)}</dd>
+      <dt>Superficie</dt><dd>${fmt.format(p.area_km2)} km²</dd><dt>Posición</dt><dd>${tt.t > 0 ? rango + " de " + M.paises.length : "sin muertes registradas"}</dd></dl>`;
+  }
+  if (hoverFoco || hover >= 0){
+    tip.classList.add("visible");
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    tip.style.left = Math.min(W - tw, x + 16) + "px"; tip.style.top = Math.max(0, Math.min(H - th, y - th / 2)) + "px";
+  } else tip.classList.remove("visible");
+  redibujar();
+});
+cv.addEventListener("pointerleave", () => { hover = -1; hoverFoco = null; tip.classList.remove("visible"); redibujar(); });
+
+/* ---------- leyenda ---------- */
+document.getElementById("escala").innerHTML = NIVELES.map(([c], i) =>
+  `<li><i style="background:repeating-linear-gradient(90deg,${c} 0 4px,transparent 4px 5px)"></i>${ETIQ[i]}</li>`).join("");
+
+/* ---------- regla de años ---------- */
+const desde = document.getElementById("desde"), hasta = document.getElementById("hasta");
+[desde, hasta].forEach(inp => { inp.min = ANIOS[0]; inp.max = ANIOS[ANIOS.length - 1]; inp.step = 1; });
+desde.value = periodo[0]; hasta.value = periodo[1];
+const marcas = document.getElementById("marcas");
+const posicion = a => (a - ANIOS[0]) / (ANIOS[ANIOS.length - 1] - ANIOS[0]) * 100;
+// Se rotulan el primer año, el último y los múltiplos de 5 que no queden encima de ellos
+const primero = ANIOS[0], ultimoAnio = ANIOS[ANIOS.length - 1];
+const rotular = a => a === primero || a === ultimoAnio || (a % 5 === 0 && a - primero > 2 && ultimoAnio - a > 2);
+marcas.innerHTML = ANIOS.map(a => `<i class="marca ${a % 5 === 0 ? "mayor" : ""}" style="left:${posicion(a)}%"></i>` +
+  (rotular(a) ? `<span class="etq ${a === primero ? "inicio" : a === ultimoAnio ? "fin" : ""}" style="left:${posicion(a)}%">${etiquetaAnio(a)}</span>` : "")).join("");
+function pintarRegla(){
+  const r = document.getElementById("rango"), a = document.getElementById("asa-desde"), b = document.getElementById("asa-hasta");
+  r.style.left = posicion(periodo[0]) + "%"; r.style.width = Math.max(.6, posicion(periodo[1]) - posicion(periodo[0])) + "%";
+  a.style.left = posicion(periodo[0]) + "%"; b.style.left = posicion(periodo[1]) + "%";
+  // cerca de los bordes, la etiqueta se apoya hacia adentro para no cortarse
+  const anclar = p => p < 8 ? "translateX(0)" : p > 92 ? "translateX(-100%)" : "translateX(-50%)";
+  a.style.transform = anclar(posicion(periodo[0])); b.style.transform = anclar(posicion(periodo[1]));
+  a.textContent = periodo[0]; b.textContent = etiquetaAnio(periodo[1]); b.style.display = periodo[0] === periodo[1] ? "none" : "";
+}
+let espera = null;
+function alMover(){
+  let a = +desde.value, b = +hasta.value; if (a > b){ if (this === desde) a = b; else b = a; desde.value = a; hasta.value = b; }
+  if (a === periodo[0] && b === periodo[1]) return;
+  periodo = [a, b]; pintarRegla(); clearTimeout(espera); espera = setTimeout(() => aplicarPeriodo(true), 140);
+}
+desde.addEventListener("input", alMover); hasta.addEventListener("input", alMover);
+[["desde", "asa-desde"], ["hasta", "asa-hasta"]].forEach(([i, a]) => { const inp = document.getElementById(i), asa = document.getElementById(a);
+  inp.addEventListener("focus", () => asa.classList.add("foco")); inp.addEventListener("blur", () => asa.classList.remove("foco")); });
+
+/* ---------- arranque ---------- */
+// El iframe de Streamlit tiene alto fijo: se ajusta al contenido real (el iframe comparte origen con la app)
+function ajustarAlto(){
+  const alto = Math.ceil(document.getElementById("raiz").getBoundingClientRect().height) + 28;
+  try { const fr = window.frameElement;
+    // Streamlit fija también el alto del contenedor del iframe: se ajustan los dos
+    if (fr){ fr.style.height = alto + "px"; if (fr.parentElement) fr.parentElement.style.height = alto + "px"; } }
+  catch (e) { /* sin acceso: queda el alto fijo */ }
+}
+new ResizeObserver(ajustarAlto).observe(document.getElementById("raiz"));
+let ancho = 0, iniciado = false;
+function arrancar(){
+  iniciado = true; ancho = lienzo.clientWidth;
+  preparar(); prepararFronteras();
+  const tot = calcular(); actualizarTextos(tot); pintarRegla();
+  modo = "armar"; tInicio = performance.now();
+  if (reducir) dibujar(tInicio); else requestAnimationFrame(bucle);
+}
+document.fonts.ready.then(arrancar);
+// El iframe puede nacer casi sin ancho: el mapa se rearma (con su animación) cuando llega a su tamaño real
+new ResizeObserver(() => {
+  const w = lienzo.clientWidth;
+  if (!iniciado || Math.abs(w - ancho) <= 4) return;
+  const primeraVez = ancho < 300; ancho = w;
+  preparar(); prepararFronteras();
+  if (primeraVez){ modo = "armar"; tInicio = performance.now(); } else modo = "estable";
+  redibujar();
+}).observe(lienzo);
+</script>
+</body>
+</html>

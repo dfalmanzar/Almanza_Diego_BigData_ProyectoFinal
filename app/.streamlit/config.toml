@@ -1,0 +1,55 @@
+[server]
+enableStaticServing = true
+headless = true
+runOnSave = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+showSidebarNavigation = false
+
+[theme]
+base = "dark"
+primaryColor = "#FF3B2A"
+backgroundColor = "#0A0A0A"
+secondaryBackgroundColor = "#121212"
+textColor = "#F2F2F2"
+linkColor = "#FF3B2A"
+borderColor = "#3A3A3A"
+showWidgetBorder = true
+baseRadius = "none"
+font = "Barlow, sans-serif"
+headingFont = "'Chakra Petch', sans-serif"
+codeFont = "'Martian Mono', monospace"
+
+[[theme.fontFaces]]
+family = "Barlow"
+url = "app/static/fuentes/Barlow-Regular.ttf"
+weight = 400
+
+[[theme.fontFaces]]
+family = "Barlow"
+url = "app/static/fuentes/Barlow-Medium.ttf"
+weight = 500
+
+[[theme.fontFaces]]
+family = "Barlow"
+url = "app/static/fuentes/Barlow-SemiBold.ttf"
+weight = 600
+
+[[theme.fontFaces]]
+family = "Martian Mono"
+url = "app/static/fuentes/MartianMono-Variable.ttf"
+weight = "100 800"
+
+[[theme.fontFaces]]
+family = "Chakra Petch"
+url = "app/static/fuentes/ChakraPetch-SemiBold.ttf"
+weight = 600
+
+[[theme.fontFaces]]
+family = "Chakra Petch"
+url = "app/static/fuentes/ChakraPetch-Bold.ttf"
+weight = 700

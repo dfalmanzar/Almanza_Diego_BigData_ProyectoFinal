@@ -1,0 +1,98 @@
+# Proyecto final - Violencia armada: conflicto global (UCDP) y homicidios en Colombia (MinDefensa)
+# Levantar todo:  docker compose up --build
+# Orden: mongo (sano) -> pipeline (descarga, notebook, mapa; termina) -> app. JupyterLab queda aparte para explorar.
+name: violencia-armada
+
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: va-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USUARIO}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_CLAVE}
+    ports:
+      # Puerto del host configurable: 27017 suele estar ocupado por el Mongo de la Actividad 1
+      - "${MONGO_PUERTO_HOST:-27018}:27017"
+    volumes:
+      - mongo_datos:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Ejecuta todo el procesamiento una vez y termina. Si los resultados ya existen, se salta los pasos (segundos).
+  pipeline:
+    build:
+      context: .
+      dockerfile: docker/procesamiento/Dockerfile
+    image: violencia-armada-procesamiento
+    container_name: va-pipeline
+    command: ["python", "src/pipeline.py"]
+    restart: "no"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MONGO_URI: mongodb://${MONGO_USUARIO}:${MONGO_CLAVE}@mongo:27017/
+      MONGO_BD: ${MONGO_BD}
+      PIPELINE_FORZAR: ${PIPELINE_FORZAR:-0}
+      APP_PUERTO_HOST: ${APP_PUERTO_HOST:-8501}
+    volumes:
+      - ./data:/proyecto/data
+      - ./notebooks:/proyecto/notebooks
+      - ./src:/proyecto/src
+      - ./models:/proyecto/models
+      - ./reports:/proyecto/reports
+
+  procesamiento:
+    build:
+      context: .
+      dockerfile: docker/procesamiento/Dockerfile
+    image: violencia-armada-procesamiento
+    container_name: va-procesamiento
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN}
+      # Dentro de la red de Docker, Mongo se encuentra por el nombre del servicio
+      MONGO_URI: mongodb://${MONGO_USUARIO}:${MONGO_CLAVE}@mongo:27017/
+      MONGO_BD: ${MONGO_BD}
+    ports:
+      - "${JUPYTER_PUERTO_HOST:-8888}:8888"
+    volumes:
+      - ./data:/proyecto/data
+      - ./notebooks:/proyecto/notebooks
+      - ./src:/proyecto/src
+      - ./models:/proyecto/models
+      - ./reports:/proyecto/reports
+
+  app:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    container_name: va-app
+    depends_on:
+      mongo:
+        condition: service_healthy
+      # El dashboard solo lee resultados: arranca cuando el pipeline terminó bien
+      pipeline:
+        condition: service_completed_successfully
+    environment:
+      MONGO_URI: mongodb://${MONGO_USUARIO}:${MONGO_CLAVE}@mongo:27017/
+      MONGO_BD: ${MONGO_BD}
+    ports:
+      - "${APP_PUERTO_HOST:-8501}:8501"
+    volumes:
+      # La app solo lee los resultados del procesamiento
+      - ./data/processed:/proyecto/data/processed:ro
+      - ./models:/proyecto/models:ro
+      - ./reports:/proyecto/reports:ro
+      # Código montado para ver los cambios al guardar durante el desarrollo
+      - ./app:/proyecto/app
+      - ./src:/proyecto/src:ro
+
+volumes:
+  mongo_datos:

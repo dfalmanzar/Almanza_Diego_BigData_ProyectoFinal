@@ -1,0 +1,44 @@
+# Ejecución desde cero con 'docker compose up --build' (copia limpia: data/raw, data/processed, models, reports y MongoDB vacíos)
+# Fecha: 2026-11-17 19:16
+
+## docker compose ps -a
+NAME               IMAGE                            STATUS
+va-app             va-prueba-app                    Up 34 seconds (healthy)
+va-mongo           mongo:7.0                        Up 10 minutes (healthy)
+va-pipeline        violencia-armada-procesamiento   Exited (0) 35 seconds ago
+va-procesamiento   violencia-armada-procesamiento   Up 10 minutes
+
+## docker compose logs pipeline
+va-pipeline  | 
+va-pipeline  | [pipeline] 1/3 Datos crudos en data/raw/
+va-pipeline  | [ucdp_ged] UCDP Georeferenced Event Dataset (GED) Global v26.1, 1989-2025
+va-pipeline  |     1.0 MB    2.1 MB    3.1 MB    4.2 MB    5.2 MB    6.3 MB    7.3 MB    8.4 MB    9.4 MB    10.5 MB    11.5 MB    12.6 MB    13.6 MB    14.7 MB    15.7 MB    16.8 MB    17.8 MB    18.9 MB    19.9 MB    21.0 MB    22.0 MB    23.1 MB    24.1 MB    25.2 MB    26.2 MB    27.3 MB    28.3 MB    29.4 MB    30.4 MB    31.5 MB    32.5 MB    33.6 MB    34.6 MB    35.7 MB    36.7 MB    37.7 MB    38.8 MB    39.1 MB
+va-pipeline  |     descomprimido -> ucdp_ged_261.csv
+va-pipeline  | [ucdp_candidate] UCDP Candidate Events Dataset v26.01.26.09, enero-septiembre 2026
+va-pipeline  |     1.0 MB    2.1 MB    3.1 MB    4.2 MB    5.2 MB    6.3 MB    7.3 MB    8.4 MB    9.4 MB    10.5 MB    11.5 MB    12.6 MB    13.1 MB
+va-pipeline  | [homicidios_col] Homicidios en Colombia - Ministerio de Defensa Nacional (datos.gov.co m8fd-ahd9)
+va-pipeline  |     1.0 MB    2.1 MB    3.1 MB    4.2 MB    5.2 MB    6.3 MB    7.3 MB    8.4 MB    9.4 MB    10.5 MB    11.5 MB    12.6 MB    13.6 MB    14.7 MB    15.7 MB    16.8 MB    17.8 MB    18.9 MB    19.9 MB    21.0 MB    22.0 MB    23.1 MB    24.1 MB    25.2 MB    26.2 MB    27.3 MB    28.3 MB    29.4 MB    30.4 MB    31.5 MB    32.5 MB    33.6 MB    34.6 MB    35.7 MB    36.7 MB    37.7 MB    38.8 MB    39.8 MB    40.9 MB    41.5 MB
+va-pipeline  | [paises_geo] Límites de países Natural Earth 1:50m v5.1.2 (dominio público), para el mapa del dashboard
+va-pipeline  |     1.0 MB    2.1 MB    3.1 MB
+va-pipeline  | 
+va-pipeline  | Registro de descargas: data/raw/descargas.json
+va-pipeline  | [pipeline]   listo en 77 s
+va-pipeline  | 
+va-pipeline  | [pipeline] 2/3 Notebook: ETL, OLAP, modelo, MongoDB y reporte PDF
+va-pipeline  | [pipeline]   se ejecuta (faltan: data/processed/homicidios_limpio.parquet, data/processed/ucdp_eventos.parquet, data/processed/cubo_homicidios.parquet, data/processed/cubo_ucdp.parquet, data/processed/panel_ucdp_colombia.parquet, models/modelo_categoria_violencia.joblib, models/metadatos_modelo.json, reports/reporte_violencia_armada.pdf, documento de análisis en MongoDB); puede tardar varios minutos
+va-pipeline  | [NbConvertApp] Converting notebook /proyecto/notebooks/Almanza_Diego_BigData_ProyectoFinal.ipynb to notebook
+va-pipeline  | Setting default log level to "WARN".
+va-pipeline  | To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+va-pipeline  | 26/11/18 00:08:27 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+va-pipeline  | [NbConvertApp] Writing 1850207 bytes to /proyecto/notebooks/Almanza_Diego_BigData_ProyectoFinal.ipynb
+va-pipeline  | [pipeline]   listo en 493 s
+va-pipeline  | 
+va-pipeline  | [pipeline] 3/3 Datos del mapamundi del dashboard
+va-pipeline  | data/processed/mapa_mundo.json: 241 países, 14019 focos, 1.63 MB | eventos en el mar o sin país: 4877
+va-pipeline  | [pipeline]   listo en 25 s
+va-pipeline  | 
+va-pipeline  | [pipeline] Todo listo. Dashboard: http://localhost:8501
+
+## Verificación
+documentos de analisis en MongoDB: 1
+dashboard http://localhost:8501 -> HTTP 200

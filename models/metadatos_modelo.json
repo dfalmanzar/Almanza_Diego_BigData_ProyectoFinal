@@ -1,0 +1,4731 @@
+{
+  "tarea": "Clasificación multiclase",
+  "algoritmo": "Random Forest",
+  "objetivo": "categoria_violencia",
+  "clases": [
+    "Conflicto armado",
+    "Crimen organizado y sicariato",
+    "Convivencia y riñas",
+    "Delincuencia común"
+  ],
+  "variables": [
+    "departamento",
+    "zona",
+    "sexo",
+    "arma_grupo",
+    "dia_semana",
+    "mes",
+    "cod_muni",
+    "eventos_ucdp_12m",
+    "muertes_ucdp_12m",
+    "cantidad",
+    "fin_de_semana",
+    "post_acuerdo_paz"
+  ],
+  "nombres_variables": {
+    "departamento": "Departamento",
+    "cod_muni": "Municipio",
+    "zona": "Zona (urbana / rural)",
+    "sexo": "Sexo de la víctima",
+    "arma_grupo": "Arma usada",
+    "dia_semana": "Día de la semana",
+    "mes": "Mes",
+    "eventos_ucdp_12m": "Eventos de conflicto (UCDP) en 12 meses previos",
+    "muertes_ucdp_12m": "Muertes de conflicto (UCDP) en 12 meses previos",
+    "cantidad": "Víctimas en el mismo hecho",
+    "fin_de_semana": "Fin de semana",
+    "post_acuerdo_paz": "Después del Acuerdo de Paz"
+  },
+  "periodo_entrenamiento": "2005–2022",
+  "periodo_validacion": "2020–2022",
+  "periodo_prueba": "2023–2026",
+  "filas_entrenamiento": 235438,
+  "filas_prueba": 48960,
+  "metricas_prueba": {
+    "accuracy": 0.7325,
+    "precision_macro": 0.5646,
+    "recall_macro": 0.54,
+    "f1_macro": 0.5431,
+    "recall · Conflicto armado": 0.4111,
+    "recall · Crimen organizado y sicariato": 0.803,
+    "recall · Convivencia y riñas": 0.7508,
+    "recall · Delincuencia común": 0.1954,
+    "f1 · Conflicto armado": 0.4825,
+    "f1 · Crimen organizado y sicariato": 0.8266,
+    "f1 · Convivencia y riñas": 0.7437,
+    "f1 · Delincuencia común": 0.1195
+  },
+  "linea_base": {
+    "estrategia": "clase más frecuente",
+    "accuracy": 0.6641,
+    "precision_macro": 0.166,
+    "recall_macro": 0.25,
+    "f1_macro": 0.1995,
+    "recall · Conflicto armado": 0.0,
+    "recall · Crimen organizado y sicariato": 1.0,
+    "recall · Convivencia y riñas": 0.0,
+    "recall · Delincuencia común": 0.0,
+    "f1 · Conflicto armado": 0.0,
+    "f1 · Crimen organizado y sicariato": 0.7981,
+    "f1 · Convivencia y riñas": 0.0,
+    "f1 · Delincuencia común": 0.0
+  },
+  "comparacion_modelos": {
+    "Línea base (clase más frecuente)": {
+      "accuracy": 0.6641,
+      "precision_macro": 0.166,
+      "recall_macro": 0.25,
+      "f1_macro": 0.1995,
+      "recall · Conflicto armado": 0.0,
+      "recall · Crimen organizado y sicariato": 1.0,
+      "recall · Convivencia y riñas": 0.0,
+      "recall · Delincuencia común": 0.0,
+      "f1 · Conflicto armado": 0.0,
+      "f1 · Crimen organizado y sicariato": 0.7981,
+      "f1 · Convivencia y riñas": 0.0,
+      "f1 · Delincuencia común": 0.0
+    },
+    "Regresión logística": {
+      "accuracy": 0.5449,
+      "precision_macro": 0.5633,
+      "recall_macro": 0.5455,
+      "f1_macro": 0.4832,
+      "recall · Conflicto armado": 0.598,
+      "recall · Crimen organizado y sicariato": 0.5558,
+      "recall · Convivencia y riñas": 0.4911,
+      "recall · Delincuencia común": 0.5373,
+      "f1 · Conflicto armado": 0.4973,
+      "f1 · Crimen organizado y sicariato": 0.6807,
+      "f1 · Convivencia y riñas": 0.6301,
+      "f1 · Delincuencia común": 0.1245
+    },
+    "Random Forest": {
+      "accuracy": 0.7325,
+      "precision_macro": 0.5646,
+      "recall_macro": 0.54,
+      "f1_macro": 0.5431,
+      "recall · Conflicto armado": 0.4111,
+      "recall · Crimen organizado y sicariato": 0.803,
+      "recall · Convivencia y riñas": 0.7508,
+      "recall · Delincuencia común": 0.1954,
+      "f1 · Conflicto armado": 0.4825,
+      "f1 · Crimen organizado y sicariato": 0.8266,
+      "f1 · Convivencia y riñas": 0.7437,
+      "f1 · Delincuencia común": 0.1195
+    },
+    "Gradient Boosting": {
+      "accuracy": 0.6195,
+      "precision_macro": 0.5403,
+      "recall_macro": 0.5578,
+      "f1_macro": 0.5162,
+      "recall · Conflicto armado": 0.5537,
+      "recall · Crimen organizado y sicariato": 0.6236,
+      "recall · Convivencia y riñas": 0.6873,
+      "recall · Delincuencia común": 0.3666,
+      "f1 · Conflicto armado": 0.4868,
+      "f1 · Crimen organizado y sicariato": 0.7271,
+      "f1 · Convivencia y riñas": 0.7329,
+      "f1 · Delincuencia común": 0.1179
+    }
+  },
+  "criterio_exito": {
+    "mejora_f1_macro": 0.3435,
+    "recall_conflicto_armado": 0.4111,
+    "cumple": false
+  },
+  "variables_importantes": [
+    {
+      "variable": "arma_grupo",
+      "nombre": "Arma usada",
+      "caida_f1_macro": 0.1744
+    },
+    {
+      "variable": "cod_muni",
+      "nombre": "Municipio",
+      "caida_f1_macro": 0.0997
+    },
+    {
+      "variable": "zona",
+      "nombre": "Zona (urbana / rural)",
+      "caida_f1_macro": 0.0152
+    },
+    {
+      "variable": "muertes_ucdp_12m",
+      "nombre": "Muertes de conflicto (UCDP) en 12 meses previos",
+      "caida_f1_macro": 0.0048
+    },
+    {
+      "variable": "eventos_ucdp_12m",
+      "nombre": "Eventos de conflicto (UCDP) en 12 meses previos",
+      "caida_f1_macro": 0.0042
+    },
+    {
+      "variable": "dia_semana",
+      "nombre": "Día de la semana",
+      "caida_f1_macro": 0.0031
+    },
+    {
+      "variable": "fin_de_semana",
+      "nombre": "Fin de semana",
+      "caida_f1_macro": 0.0016
+    },
+    {
+      "variable": "mes",
+      "nombre": "Mes",
+      "caida_f1_macro": 0.001
+    },
+    {
+      "variable": "sexo",
+      "nombre": "Sexo de la víctima",
+      "caida_f1_macro": 0.0
+    },
+    {
+      "variable": "cantidad",
+      "nombre": "Víctimas en el mismo hecho",
+      "caida_f1_macro": 0.0
+    },
+    {
+      "variable": "post_acuerdo_paz",
+      "nombre": "Después del Acuerdo de Paz",
+      "caida_f1_macro": 0.0
+    },
+    {
+      "variable": "departamento",
+      "nombre": "Departamento",
+      "caida_f1_macro": -0.0018
+    }
+  ],
+  "matriz_confusion": {
+    "clases": [
+      "Conflicto armado",
+      "Crimen organizado y sicariato",
+      "Convivencia y riñas",
+      "Delincuencia común"
+    ],
+    "valores": [
+      [
+        1634,
+        2065,
+        127,
+        149
+      ],
+      [
+        1016,
+        26107,
+        1862,
+        3528
+      ],
+      [
+        118,
+        1470,
+        7684,
+        963
+      ],
+      [
+        30,
+        1015,
+        755,
+        437
+      ]
+    ]
+  },
+  "opciones_formulario": {
+    "departamentos": {
+      "AMAZONAS": [
+        {
+          "cod_muni": 91263,
+          "municipio": "EL ENCANTO"
+        },
+        {
+          "cod_muni": 91405,
+          "municipio": "LA CHORRERA"
+        },
+        {
+          "cod_muni": 91407,
+          "municipio": "LA PEDRERA"
+        },
+        {
+          "cod_muni": 91430,
+          "municipio": "LA VICTORIA"
+        },
+        {
+          "cod_muni": 91001,
+          "municipio": "LETICIA"
+        },
+        {
+          "cod_muni": 91530,
+          "municipio": "PUERTO ALEGRIA"
+        },
+        {
+          "cod_muni": 91536,
+          "municipio": "PUERTO ARICA"
+        },
+        {
+          "cod_muni": 91540,
+          "municipio": "PUERTO NARIÑO"
+        },
+        {
+          "cod_muni": 91798,
+          "municipio": "TARAPACA"
+        }
+      ],
+      "ANTIOQUIA": [
+        {
+          "cod_muni": 5002,
+          "municipio": "ABEJORRAL"
+        },
+        {
+          "cod_muni": 5004,
+          "municipio": "ABRIAQUI"
+        },
+        {
+          "cod_muni": 5021,
+          "municipio": "ALEJANDRIA"
+        },
+        {
+          "cod_muni": 5030,
+          "municipio": "AMAGA"
+        },
+        {
+          "cod_muni": 5031,
+          "municipio": "AMALFI"
+        },
+        {
+          "cod_muni": 5034,
+          "municipio": "ANDES"
+        },
+        {
+          "cod_muni": 5036,
+          "municipio": "ANGELOPOLIS"
+        },
+        {
+          "cod_muni": 5038,
+          "municipio": "ANGOSTURA"
+        },
+        {
+          "cod_muni": 5040,
+          "municipio": "ANORI"
+        },
+        {
+          "cod_muni": 5044,
+          "municipio": "ANZA"
+        },
+        {
+          "cod_muni": 5045,
+          "municipio": "APARTADO"
+        },
+        {
+          "cod_muni": 5051,
+          "municipio": "ARBOLETES"
+        },
+        {
+          "cod_muni": 5055,
+          "municipio": "ARGELIA"
+        },
+        {
+          "cod_muni": 5059,
+          "municipio": "ARMENIA"
+        },
+        {
+          "cod_muni": 5079,
+          "municipio": "BARBOSA"
+        },
+        {
+          "cod_muni": 5088,
+          "municipio": "BELLO"
+        },
+        {
+          "cod_muni": 5086,
+          "municipio": "BELMIRA"
+        },
+        {
+          "cod_muni": 5091,
+          "municipio": "BETANIA"
+        },
+        {
+          "cod_muni": 5093,
+          "municipio": "BETULIA"
+        },
+        {
+          "cod_muni": 5107,
+          "municipio": "BRICEÑO"
+        },
+        {
+          "cod_muni": 5113,
+          "municipio": "BURITICA"
+        },
+        {
+          "cod_muni": 5120,
+          "municipio": "CACERES"
+        },
+        {
+          "cod_muni": 5125,
+          "municipio": "CAICEDO"
+        },
+        {
+          "cod_muni": 5129,
+          "municipio": "CALDAS"
+        },
+        {
+          "cod_muni": 5134,
+          "municipio": "CAMPAMENTO"
+        },
+        {
+          "cod_muni": 5142,
+          "municipio": "CARACOLI"
+        },
+        {
+          "cod_muni": 5145,
+          "municipio": "CARAMANTA"
+        },
+        {
+          "cod_muni": 5147,
+          "municipio": "CAREPA"
+        },
+        {
+          "cod_muni": 5150,
+          "municipio": "CAROLINA"
+        },
+        {
+          "cod_muni": 5154,
+          "municipio": "CAUCASIA"
+        },
+        {
+          "cod_muni": 5138,
+          "municipio": "CAÑASGORDAS"
+        },
+        {
+          "cod_muni": 5172,
+          "municipio": "CHIGORODO"
+        },
+        {
+          "cod_muni": 5190,
+          "municipio": "CISNEROS"
+        },
+        {
+          "cod_muni": 5101,
+          "municipio": "CIUDAD BOLIVAR"
+        },
+        {
+          "cod_muni": 5197,
+          "municipio": "COCORNA"
+        },
+        {
+          "cod_muni": 5206,
+          "municipio": "CONCEPCION"
+        },
+        {
+          "cod_muni": 5209,
+          "municipio": "CONCORDIA"
+        },
+        {
+          "cod_muni": 5212,
+          "municipio": "COPACABANA"
+        },
+        {
+          "cod_muni": 5234,
+          "municipio": "DABEIBA"
+        },
+        {
+          "cod_muni": 5237,
+          "municipio": "DONMATIAS"
+        },
+        {
+          "cod_muni": 5240,
+          "municipio": "EBEJICO"
+        },
+        {
+          "cod_muni": 5250,
+          "municipio": "EL BAGRE"
+        },
+        {
+          "cod_muni": 5148,
+          "municipio": "EL CARMEN DE VIBORAL"
+        },
+        {
+          "cod_muni": 5697,
+          "municipio": "EL SANTUARIO"
+        },
+        {
+          "cod_muni": 5264,
+          "municipio": "ENTRERRIOS"
+        },
+        {
+          "cod_muni": 5266,
+          "municipio": "ENVIGADO"
+        },
+        {
+          "cod_muni": 5282,
+          "municipio": "FREDONIA"
+        },
+        {
+          "cod_muni": 5284,
+          "municipio": "FRONTINO"
+        },
+        {
+          "cod_muni": 5306,
+          "municipio": "GIRALDO"
+        },
+        {
+          "cod_muni": 5308,
+          "municipio": "GIRARDOTA"
+        },
+        {
+          "cod_muni": 5310,
+          "municipio": "GOMEZ PLATA"
+        },
+        {
+          "cod_muni": 5313,
+          "municipio": "GRANADA"
+        },
+        {
+          "cod_muni": 5315,
+          "municipio": "GUADALUPE"
+        },
+        {
+          "cod_muni": 5318,
+          "municipio": "GUARNE"
+        },
+        {
+          "cod_muni": 5321,
+          "municipio": "GUATAPE"
+        },
+        {
+          "cod_muni": 5347,
+          "municipio": "HELICONIA"
+        },
+        {
+          "cod_muni": 5353,
+          "municipio": "HISPANIA"
+        },
+        {
+          "cod_muni": 5360,
+          "municipio": "ITAGUI"
+        },
+        {
+          "cod_muni": 5361,
+          "municipio": "ITUANGO"
+        },
+        {
+          "cod_muni": 5364,
+          "municipio": "JARDIN"
+        },
+        {
+          "cod_muni": 5368,
+          "municipio": "JERICO"
+        },
+        {
+          "cod_muni": 5376,
+          "municipio": "LA CEJA"
+        },
+        {
+          "cod_muni": 5380,
+          "municipio": "LA ESTRELLA"
+        },
+        {
+          "cod_muni": 5390,
+          "municipio": "LA PINTADA"
+        },
+        {
+          "cod_muni": 5400,
+          "municipio": "LA UNION"
+        },
+        {
+          "cod_muni": 5411,
+          "municipio": "LIBORINA"
+        },
+        {
+          "cod_muni": 5425,
+          "municipio": "MACEO"
+        },
+        {
+          "cod_muni": 5440,
+          "municipio": "MARINILLA"
+        },
+        {
+          "cod_muni": 5001,
+          "municipio": "MEDELLIN"
+        },
+        {
+          "cod_muni": 5467,
+          "municipio": "MONTEBELLO"
+        },
+        {
+          "cod_muni": 5475,
+          "municipio": "MURINDO"
+        },
+        {
+          "cod_muni": 5480,
+          "municipio": "MUTATA"
+        },
+        {
+          "cod_muni": 5483,
+          "municipio": "NARIÑO"
+        },
+        {
+          "cod_muni": 5495,
+          "municipio": "NECHI"
+        },
+        {
+          "cod_muni": 5490,
+          "municipio": "NECOCLI"
+        },
+        {
+          "cod_muni": 5501,
+          "municipio": "OLAYA"
+        },
+        {
+          "cod_muni": 5543,
+          "municipio": "PEQUE"
+        },
+        {
+          "cod_muni": 5541,
+          "municipio": "PEÑOL"
+        },
+        {
+          "cod_muni": 5576,
+          "municipio": "PUEBLORRICO"
+        },
+        {
+          "cod_muni": 5579,
+          "municipio": "PUERTO BERRIO"
+        },
+        {
+          "cod_muni": 5585,
+          "municipio": "PUERTO NARE"
+        },
+        {
+          "cod_muni": 5591,
+          "municipio": "PUERTO TRIUNFO"
+        },
+        {
+          "cod_muni": 5604,
+          "municipio": "REMEDIOS"
+        },
+        {
+          "cod_muni": 5607,
+          "municipio": "RETIRO"
+        },
+        {
+          "cod_muni": 5615,
+          "municipio": "RIONEGRO"
+        },
+        {
+          "cod_muni": 5628,
+          "municipio": "SABANALARGA"
+        },
+        {
+          "cod_muni": 5631,
+          "municipio": "SABANETA"
+        },
+        {
+          "cod_muni": 5642,
+          "municipio": "SALGAR"
+        },
+        {
+          "cod_muni": 5647,
+          "municipio": "SAN ANDRES DE CUERQUIA"
+        },
+        {
+          "cod_muni": 5649,
+          "municipio": "SAN CARLOS"
+        },
+        {
+          "cod_muni": 5652,
+          "municipio": "SAN FRANCISCO"
+        },
+        {
+          "cod_muni": 5656,
+          "municipio": "SAN JERONIMO"
+        },
+        {
+          "cod_muni": 5658,
+          "municipio": "SAN JOSE DE LA MONTAÑA"
+        },
+        {
+          "cod_muni": 5659,
+          "municipio": "SAN JUAN DE URABA"
+        },
+        {
+          "cod_muni": 5660,
+          "municipio": "SAN LUIS"
+        },
+        {
+          "cod_muni": 5664,
+          "municipio": "SAN PEDRO DE LOS MILAGROS"
+        },
+        {
+          "cod_muni": 5665,
+          "municipio": "SAN PEDRO DE URABA"
+        },
+        {
+          "cod_muni": 5667,
+          "municipio": "SAN RAFAEL"
+        },
+        {
+          "cod_muni": 5670,
+          "municipio": "SAN ROQUE"
+        },
+        {
+          "cod_muni": 5674,
+          "municipio": "SAN VICENTE FERRER"
+        },
+        {
+          "cod_muni": 5679,
+          "municipio": "SANTA BARBARA"
+        },
+        {
+          "cod_muni": 5042,
+          "municipio": "SANTA FE DE ANTIOQUIA"
+        },
+        {
+          "cod_muni": 5686,
+          "municipio": "SANTA ROSA DE OSOS"
+        },
+        {
+          "cod_muni": 5690,
+          "municipio": "SANTO DOMINGO"
+        },
+        {
+          "cod_muni": 5736,
+          "municipio": "SEGOVIA"
+        },
+        {
+          "cod_muni": 5756,
+          "municipio": "SONSON"
+        },
+        {
+          "cod_muni": 5761,
+          "municipio": "SOPETRAN"
+        },
+        {
+          "cod_muni": 5789,
+          "municipio": "TAMESIS"
+        },
+        {
+          "cod_muni": 5790,
+          "municipio": "TARAZA"
+        },
+        {
+          "cod_muni": 5792,
+          "municipio": "TARSO"
+        },
+        {
+          "cod_muni": 5809,
+          "municipio": "TITIRIBI"
+        },
+        {
+          "cod_muni": 5819,
+          "municipio": "TOLEDO"
+        },
+        {
+          "cod_muni": 5837,
+          "municipio": "TURBO"
+        },
+        {
+          "cod_muni": 5842,
+          "municipio": "URAMITA"
+        },
+        {
+          "cod_muni": 5847,
+          "municipio": "URRAO"
+        },
+        {
+          "cod_muni": 5854,
+          "municipio": "VALDIVIA"
+        },
+        {
+          "cod_muni": 5856,
+          "municipio": "VALPARAISO"
+        },
+        {
+          "cod_muni": 5858,
+          "municipio": "VEGACHI"
+        },
+        {
+          "cod_muni": 5861,
+          "municipio": "VENECIA"
+        },
+        {
+          "cod_muni": 5873,
+          "municipio": "VIGIA DEL FUERTE"
+        },
+        {
+          "cod_muni": 5885,
+          "municipio": "YALI"
+        },
+        {
+          "cod_muni": 5887,
+          "municipio": "YARUMAL"
+        },
+        {
+          "cod_muni": 5890,
+          "municipio": "YOLOMBO"
+        },
+        {
+          "cod_muni": 5893,
+          "municipio": "YONDO"
+        },
+        {
+          "cod_muni": 5895,
+          "municipio": "ZARAGOZA"
+        }
+      ],
+      "ARAUCA": [
+        {
+          "cod_muni": 81001,
+          "municipio": "ARAUCA"
+        },
+        {
+          "cod_muni": 81065,
+          "municipio": "ARAUQUITA"
+        },
+        {
+          "cod_muni": 81220,
+          "municipio": "CRAVO NORTE"
+        },
+        {
+          "cod_muni": 81300,
+          "municipio": "FORTUL"
+        },
+        {
+          "cod_muni": 81591,
+          "municipio": "PUERTO RONDON"
+        },
+        {
+          "cod_muni": 81736,
+          "municipio": "SARAVENA"
+        },
+        {
+          "cod_muni": 81794,
+          "municipio": "TAME"
+        }
+      ],
+      "ATLANTICO": [
+        {
+          "cod_muni": 8078,
+          "municipio": "BARANOA"
+        },
+        {
+          "cod_muni": 8001,
+          "municipio": "BARRANQUILLA"
+        },
+        {
+          "cod_muni": 8137,
+          "municipio": "CAMPO DE LA CRUZ"
+        },
+        {
+          "cod_muni": 8141,
+          "municipio": "CANDELARIA"
+        },
+        {
+          "cod_muni": 8296,
+          "municipio": "GALAPA"
+        },
+        {
+          "cod_muni": 8372,
+          "municipio": "JUAN DE ACOSTA"
+        },
+        {
+          "cod_muni": 8421,
+          "municipio": "LURUACO"
+        },
+        {
+          "cod_muni": 8433,
+          "municipio": "MALAMBO"
+        },
+        {
+          "cod_muni": 8436,
+          "municipio": "MANATI"
+        },
+        {
+          "cod_muni": 8520,
+          "municipio": "PALMAR DE VARELA"
+        },
+        {
+          "cod_muni": 8549,
+          "municipio": "PIOJO"
+        },
+        {
+          "cod_muni": 8558,
+          "municipio": "POLONUEVO"
+        },
+        {
+          "cod_muni": 8560,
+          "municipio": "PONEDERA"
+        },
+        {
+          "cod_muni": 8573,
+          "municipio": "PUERTO COLOMBIA"
+        },
+        {
+          "cod_muni": 8606,
+          "municipio": "REPELON"
+        },
+        {
+          "cod_muni": 8634,
+          "municipio": "SABANAGRANDE"
+        },
+        {
+          "cod_muni": 8638,
+          "municipio": "SABANALARGA"
+        },
+        {
+          "cod_muni": 8675,
+          "municipio": "SANTA LUCIA"
+        },
+        {
+          "cod_muni": 8685,
+          "municipio": "SANTO TOMAS"
+        },
+        {
+          "cod_muni": 8758,
+          "municipio": "SOLEDAD"
+        },
+        {
+          "cod_muni": 8770,
+          "municipio": "SUAN"
+        },
+        {
+          "cod_muni": 8832,
+          "municipio": "TUBARA"
+        },
+        {
+          "cod_muni": 8849,
+          "municipio": "USIACURI"
+        }
+      ],
+      "BOGOTA D.C.": [
+        {
+          "cod_muni": 11001,
+          "municipio": "BOGOTA D.C."
+        }
+      ],
+      "BOLIVAR": [
+        {
+          "cod_muni": 13006,
+          "municipio": "ACHI"
+        },
+        {
+          "cod_muni": 13030,
+          "municipio": "ALTOS DEL ROSARIO"
+        },
+        {
+          "cod_muni": 13042,
+          "municipio": "ARENAL"
+        },
+        {
+          "cod_muni": 13052,
+          "municipio": "ARJONA"
+        },
+        {
+          "cod_muni": 13062,
+          "municipio": "ARROYOHONDO"
+        },
+        {
+          "cod_muni": 13074,
+          "municipio": "BARRANCO DE LOBA"
+        },
+        {
+          "cod_muni": 13140,
+          "municipio": "CALAMAR"
+        },
+        {
+          "cod_muni": 13160,
+          "municipio": "CANTAGALLO"
+        },
+        {
+          "cod_muni": 13001,
+          "municipio": "CARTAGENA DE INDIAS"
+        },
+        {
+          "cod_muni": 13188,
+          "municipio": "CICUCO"
+        },
+        {
+          "cod_muni": 13222,
+          "municipio": "CLEMENCIA"
+        },
+        {
+          "cod_muni": 13212,
+          "municipio": "CORDOBA"
+        },
+        {
+          "cod_muni": 13244,
+          "municipio": "EL CARMEN DE BOLIVAR"
+        },
+        {
+          "cod_muni": 13248,
+          "municipio": "EL GUAMO"
+        },
+        {
+          "cod_muni": 13268,
+          "municipio": "EL PEÑON"
+        },
+        {
+          "cod_muni": 13300,
+          "municipio": "HATILLO DE LOBA"
+        },
+        {
+          "cod_muni": 13430,
+          "municipio": "MAGANGUE"
+        },
+        {
+          "cod_muni": 13433,
+          "municipio": "MAHATES"
+        },
+        {
+          "cod_muni": 13440,
+          "municipio": "MARGARITA"
+        },
+        {
+          "cod_muni": 13442,
+          "municipio": "MARIA LA BAJA"
+        },
+        {
+          "cod_muni": 13458,
+          "municipio": "MONTECRISTO"
+        },
+        {
+          "cod_muni": 13473,
+          "municipio": "MORALES"
+        },
+        {
+          "cod_muni": 13490,
+          "municipio": "NOROSI"
+        },
+        {
+          "cod_muni": 13549,
+          "municipio": "PINILLOS"
+        },
+        {
+          "cod_muni": 13580,
+          "municipio": "REGIDOR"
+        },
+        {
+          "cod_muni": 13600,
+          "municipio": "RIO VIEJO"
+        },
+        {
+          "cod_muni": 13620,
+          "municipio": "SAN CRISTOBAL"
+        },
+        {
+          "cod_muni": 13647,
+          "municipio": "SAN ESTANISLAO"
+        },
+        {
+          "cod_muni": 13650,
+          "municipio": "SAN FERNANDO"
+        },
+        {
+          "cod_muni": 13654,
+          "municipio": "SAN JACINTO"
+        },
+        {
+          "cod_muni": 13655,
+          "municipio": "SAN JACINTO DEL CAUCA"
+        },
+        {
+          "cod_muni": 13657,
+          "municipio": "SAN JUAN NEPOMUCENO"
+        },
+        {
+          "cod_muni": 13667,
+          "municipio": "SAN MARTIN DE LOBA"
+        },
+        {
+          "cod_muni": 13670,
+          "municipio": "SAN PABLO"
+        },
+        {
+          "cod_muni": 13673,
+          "municipio": "SANTA CATALINA"
+        },
+        {
+          "cod_muni": 13468,
+          "municipio": "SANTA CRUZ DE MOMPOX"
+        },
+        {
+          "cod_muni": 13683,
+          "municipio": "SANTA ROSA"
+        },
+        {
+          "cod_muni": 13688,
+          "municipio": "SANTA ROSA DEL SUR"
+        },
+        {
+          "cod_muni": 13744,
+          "municipio": "SIMITI"
+        },
+        {
+          "cod_muni": 13760,
+          "municipio": "SOPLAVIENTO"
+        },
+        {
+          "cod_muni": 13780,
+          "municipio": "TALAIGUA NUEVO"
+        },
+        {
+          "cod_muni": 13810,
+          "municipio": "TIQUISIO"
+        },
+        {
+          "cod_muni": 13836,
+          "municipio": "TURBACO"
+        },
+        {
+          "cod_muni": 13838,
+          "municipio": "TURBANA"
+        },
+        {
+          "cod_muni": 13873,
+          "municipio": "VILLANUEVA"
+        },
+        {
+          "cod_muni": 13894,
+          "municipio": "ZAMBRANO"
+        }
+      ],
+      "BOYACA": [
+        {
+          "cod_muni": 15022,
+          "municipio": "ALMEIDA"
+        },
+        {
+          "cod_muni": 15047,
+          "municipio": "AQUITANIA"
+        },
+        {
+          "cod_muni": 15051,
+          "municipio": "ARCABUCO"
+        },
+        {
+          "cod_muni": 15087,
+          "municipio": "BELEN"
+        },
+        {
+          "cod_muni": 15090,
+          "municipio": "BERBEO"
+        },
+        {
+          "cod_muni": 15097,
+          "municipio": "BOAVITA"
+        },
+        {
+          "cod_muni": 15104,
+          "municipio": "BOYACA"
+        },
+        {
+          "cod_muni": 15106,
+          "municipio": "BRICEÑO"
+        },
+        {
+          "cod_muni": 15109,
+          "municipio": "BUENAVISTA"
+        },
+        {
+          "cod_muni": 15114,
+          "municipio": "BUSBANZA"
+        },
+        {
+          "cod_muni": 15131,
+          "municipio": "CALDAS"
+        },
+        {
+          "cod_muni": 15135,
+          "municipio": "CAMPOHERMOSO"
+        },
+        {
+          "cod_muni": 15162,
+          "municipio": "CERINZA"
+        },
+        {
+          "cod_muni": 15172,
+          "municipio": "CHINAVITA"
+        },
+        {
+          "cod_muni": 15176,
+          "municipio": "CHIQUINQUIRA"
+        },
+        {
+          "cod_muni": 15232,
+          "municipio": "CHIQUIZA"
+        },
+        {
+          "cod_muni": 15180,
+          "municipio": "CHISCAS"
+        },
+        {
+          "cod_muni": 15183,
+          "municipio": "CHITA"
+        },
+        {
+          "cod_muni": 15185,
+          "municipio": "CHITARAQUE"
+        },
+        {
+          "cod_muni": 15187,
+          "municipio": "CHIVATA"
+        },
+        {
+          "cod_muni": 15236,
+          "municipio": "CHIVOR"
+        },
+        {
+          "cod_muni": 15204,
+          "municipio": "COMBITA"
+        },
+        {
+          "cod_muni": 15212,
+          "municipio": "COPER"
+        },
+        {
+          "cod_muni": 15215,
+          "municipio": "CORRALES"
+        },
+        {
+          "cod_muni": 15218,
+          "municipio": "COVARACHIA"
+        },
+        {
+          "cod_muni": 15223,
+          "municipio": "CUBARA"
+        },
+        {
+          "cod_muni": 15224,
+          "municipio": "CUCAITA"
+        },
+        {
+          "cod_muni": 15226,
+          "municipio": "CUITIVA"
+        },
+        {
+          "cod_muni": 15238,
+          "municipio": "DUITAMA"
+        },
+        {
+          "cod_muni": 15244,
+          "municipio": "EL COCUY"
+        },
+        {
+          "cod_muni": 15248,
+          "municipio": "EL ESPINO"
+        },
+        {
+          "cod_muni": 15272,
+          "municipio": "FIRAVITOBA"
+        },
+        {
+          "cod_muni": 15276,
+          "municipio": "FLORESTA"
+        },
+        {
+          "cod_muni": 15293,
+          "municipio": "GACHANTIVA"
+        },
+        {
+          "cod_muni": 15296,
+          "municipio": "GAMEZA"
+        },
+        {
+          "cod_muni": 15299,
+          "municipio": "GARAGOA"
+        },
+        {
+          "cod_muni": 15317,
+          "municipio": "GUACAMAYAS"
+        },
+        {
+          "cod_muni": 15322,
+          "municipio": "GUATEQUE"
+        },
+        {
+          "cod_muni": 15325,
+          "municipio": "GUAYATA"
+        },
+        {
+          "cod_muni": 15332,
+          "municipio": "GÜICAN DE LA SIERRA"
+        },
+        {
+          "cod_muni": 15367,
+          "municipio": "JENESANO"
+        },
+        {
+          "cod_muni": 15368,
+          "municipio": "JERICO"
+        },
+        {
+          "cod_muni": 15380,
+          "municipio": "LA CAPILLA"
+        },
+        {
+          "cod_muni": 15403,
+          "municipio": "LA UVITA"
+        },
+        {
+          "cod_muni": 15401,
+          "municipio": "LA VICTORIA"
+        },
+        {
+          "cod_muni": 15377,
+          "municipio": "LABRANZAGRANDE"
+        },
+        {
+          "cod_muni": 15425,
+          "municipio": "MACANAL"
+        },
+        {
+          "cod_muni": 15442,
+          "municipio": "MARIPI"
+        },
+        {
+          "cod_muni": 15455,
+          "municipio": "MIRAFLORES"
+        },
+        {
+          "cod_muni": 15464,
+          "municipio": "MONGUA"
+        },
+        {
+          "cod_muni": 15466,
+          "municipio": "MONGUI"
+        },
+        {
+          "cod_muni": 15469,
+          "municipio": "MONIQUIRA"
+        },
+        {
+          "cod_muni": 15476,
+          "municipio": "MOTAVITA"
+        },
+        {
+          "cod_muni": 15480,
+          "municipio": "MUZO"
+        },
+        {
+          "cod_muni": 15491,
+          "municipio": "NOBSA"
+        },
+        {
+          "cod_muni": 15494,
+          "municipio": "NUEVO COLON"
+        },
+        {
+          "cod_muni": 15500,
+          "municipio": "OICATA"
+        },
+        {
+          "cod_muni": 15507,
+          "municipio": "OTANCHE"
+        },
+        {
+          "cod_muni": 15511,
+          "municipio": "PACHAVITA"
+        },
+        {
+          "cod_muni": 15514,
+          "municipio": "PAEZ"
+        },
+        {
+          "cod_muni": 15516,
+          "municipio": "PAIPA"
+        },
+        {
+          "cod_muni": 15518,
+          "municipio": "PAJARITO"
+        },
+        {
+          "cod_muni": 15522,
+          "municipio": "PANQUEBA"
+        },
+        {
+          "cod_muni": 15531,
+          "municipio": "PAUNA"
+        },
+        {
+          "cod_muni": 15533,
+          "municipio": "PAYA"
+        },
+        {
+          "cod_muni": 15537,
+          "municipio": "PAZ DE RIO"
+        },
+        {
+          "cod_muni": 15542,
+          "municipio": "PESCA"
+        },
+        {
+          "cod_muni": 15550,
+          "municipio": "PISBA"
+        },
+        {
+          "cod_muni": 15572,
+          "municipio": "PUERTO BOYACA"
+        },
+        {
+          "cod_muni": 15580,
+          "municipio": "QUIPAMA"
+        },
+        {
+          "cod_muni": 15599,
+          "municipio": "RAMIRIQUI"
+        },
+        {
+          "cod_muni": 15600,
+          "municipio": "RAQUIRA"
+        },
+        {
+          "cod_muni": 15621,
+          "municipio": "RONDON"
+        },
+        {
+          "cod_muni": 15632,
+          "municipio": "SABOYA"
+        },
+        {
+          "cod_muni": 15638,
+          "municipio": "SACHICA"
+        },
+        {
+          "cod_muni": 15646,
+          "municipio": "SAMACA"
+        },
+        {
+          "cod_muni": 15660,
+          "municipio": "SAN EDUARDO"
+        },
+        {
+          "cod_muni": 15664,
+          "municipio": "SAN JOSE DE PARE"
+        },
+        {
+          "cod_muni": 15667,
+          "municipio": "SAN LUIS DE GACENO"
+        },
+        {
+          "cod_muni": 15673,
+          "municipio": "SAN MATEO"
+        },
+        {
+          "cod_muni": 15676,
+          "municipio": "SAN MIGUEL DE SEMA"
+        },
+        {
+          "cod_muni": 15681,
+          "municipio": "SAN PABLO DE BORBUR"
+        },
+        {
+          "cod_muni": 15690,
+          "municipio": "SANTA MARIA"
+        },
+        {
+          "cod_muni": 15693,
+          "municipio": "SANTA ROSA DE VITERBO"
+        },
+        {
+          "cod_muni": 15696,
+          "municipio": "SANTA SOFIA"
+        },
+        {
+          "cod_muni": 15686,
+          "municipio": "SANTANA"
+        },
+        {
+          "cod_muni": 15720,
+          "municipio": "SATIVANORTE"
+        },
+        {
+          "cod_muni": 15740,
+          "municipio": "SIACHOQUE"
+        },
+        {
+          "cod_muni": 15753,
+          "municipio": "SOATA"
+        },
+        {
+          "cod_muni": 15757,
+          "municipio": "SOCHA"
+        },
+        {
+          "cod_muni": 15755,
+          "municipio": "SOCOTA"
+        },
+        {
+          "cod_muni": 15759,
+          "municipio": "SOGAMOSO"
+        },
+        {
+          "cod_muni": 15761,
+          "municipio": "SOMONDOCO"
+        },
+        {
+          "cod_muni": 15762,
+          "municipio": "SORA"
+        },
+        {
+          "cod_muni": 15764,
+          "municipio": "SORACA"
+        },
+        {
+          "cod_muni": 15763,
+          "municipio": "SOTAQUIRA"
+        },
+        {
+          "cod_muni": 15774,
+          "municipio": "SUSACON"
+        },
+        {
+          "cod_muni": 15776,
+          "municipio": "SUTAMARCHAN"
+        },
+        {
+          "cod_muni": 15778,
+          "municipio": "SUTATENZA"
+        },
+        {
+          "cod_muni": 15790,
+          "municipio": "TASCO"
+        },
+        {
+          "cod_muni": 15798,
+          "municipio": "TENZA"
+        },
+        {
+          "cod_muni": 15804,
+          "municipio": "TIBANA"
+        },
+        {
+          "cod_muni": 15806,
+          "municipio": "TIBASOSA"
+        },
+        {
+          "cod_muni": 15808,
+          "municipio": "TINJACA"
+        },
+        {
+          "cod_muni": 15810,
+          "municipio": "TIPACOQUE"
+        },
+        {
+          "cod_muni": 15814,
+          "municipio": "TOCA"
+        },
+        {
+          "cod_muni": 15816,
+          "municipio": "TOGÜI"
+        },
+        {
+          "cod_muni": 15820,
+          "municipio": "TOPAGA"
+        },
+        {
+          "cod_muni": 15822,
+          "municipio": "TOTA"
+        },
+        {
+          "cod_muni": 15001,
+          "municipio": "TUNJA"
+        },
+        {
+          "cod_muni": 15832,
+          "municipio": "TUNUNGUA"
+        },
+        {
+          "cod_muni": 15835,
+          "municipio": "TURMEQUE"
+        },
+        {
+          "cod_muni": 15837,
+          "municipio": "TUTA"
+        },
+        {
+          "cod_muni": 15839,
+          "municipio": "TUTAZA"
+        },
+        {
+          "cod_muni": 15842,
+          "municipio": "UMBITA"
+        },
+        {
+          "cod_muni": 15861,
+          "municipio": "VENTAQUEMADA"
+        },
+        {
+          "cod_muni": 15407,
+          "municipio": "VILLA DE LEYVA"
+        },
+        {
+          "cod_muni": 15879,
+          "municipio": "VIRACACHA"
+        },
+        {
+          "cod_muni": 15897,
+          "municipio": "ZETAQUIRA"
+        }
+      ],
+      "CALDAS": [
+        {
+          "cod_muni": 17013,
+          "municipio": "AGUADAS"
+        },
+        {
+          "cod_muni": 17042,
+          "municipio": "ANSERMA"
+        },
+        {
+          "cod_muni": 17050,
+          "municipio": "ARANZAZU"
+        },
+        {
+          "cod_muni": 17088,
+          "municipio": "BELALCAZAR"
+        },
+        {
+          "cod_muni": 17174,
+          "municipio": "CHINCHINA"
+        },
+        {
+          "cod_muni": 17272,
+          "municipio": "FILADELFIA"
+        },
+        {
+          "cod_muni": 17380,
+          "municipio": "LA DORADA"
+        },
+        {
+          "cod_muni": 17388,
+          "municipio": "LA MERCED"
+        },
+        {
+          "cod_muni": 17001,
+          "municipio": "MANIZALES"
+        },
+        {
+          "cod_muni": 17433,
+          "municipio": "MANZANARES"
+        },
+        {
+          "cod_muni": 17442,
+          "municipio": "MARMATO"
+        },
+        {
+          "cod_muni": 17444,
+          "municipio": "MARQUETALIA"
+        },
+        {
+          "cod_muni": 17446,
+          "municipio": "MARULANDA"
+        },
+        {
+          "cod_muni": 17486,
+          "municipio": "NEIRA"
+        },
+        {
+          "cod_muni": 17495,
+          "municipio": "NORCASIA"
+        },
+        {
+          "cod_muni": 17513,
+          "municipio": "PACORA"
+        },
+        {
+          "cod_muni": 17524,
+          "municipio": "PALESTINA"
+        },
+        {
+          "cod_muni": 17541,
+          "municipio": "PENSILVANIA"
+        },
+        {
+          "cod_muni": 17614,
+          "municipio": "RIOSUCIO"
+        },
+        {
+          "cod_muni": 17616,
+          "municipio": "RISARALDA"
+        },
+        {
+          "cod_muni": 17653,
+          "municipio": "SALAMINA"
+        },
+        {
+          "cod_muni": 17662,
+          "municipio": "SAMANA"
+        },
+        {
+          "cod_muni": 17665,
+          "municipio": "SAN JOSE"
+        },
+        {
+          "cod_muni": 17777,
+          "municipio": "SUPIA"
+        },
+        {
+          "cod_muni": 17867,
+          "municipio": "VICTORIA"
+        },
+        {
+          "cod_muni": 17873,
+          "municipio": "VILLAMARIA"
+        },
+        {
+          "cod_muni": 17877,
+          "municipio": "VITERBO"
+        }
+      ],
+      "CAQUETA": [
+        {
+          "cod_muni": 18029,
+          "municipio": "ALBANIA"
+        },
+        {
+          "cod_muni": 18094,
+          "municipio": "BELEN DE LOS ANDAQUIES"
+        },
+        {
+          "cod_muni": 18150,
+          "municipio": "CARTAGENA DEL CHAIRA"
+        },
+        {
+          "cod_muni": 18205,
+          "municipio": "CURILLO"
+        },
+        {
+          "cod_muni": 18247,
+          "municipio": "EL DONCELLO"
+        },
+        {
+          "cod_muni": 18256,
+          "municipio": "EL PAUJIL"
+        },
+        {
+          "cod_muni": 18001,
+          "municipio": "FLORENCIA"
+        },
+        {
+          "cod_muni": 18410,
+          "municipio": "LA MONTAÑITA"
+        },
+        {
+          "cod_muni": 18460,
+          "municipio": "MILAN"
+        },
+        {
+          "cod_muni": 18479,
+          "municipio": "MORELIA"
+        },
+        {
+          "cod_muni": 18592,
+          "municipio": "PUERTO RICO"
+        },
+        {
+          "cod_muni": 18610,
+          "municipio": "SAN JOSE DEL FRAGUA"
+        },
+        {
+          "cod_muni": 18753,
+          "municipio": "SAN VICENTE DEL CAGUAN"
+        },
+        {
+          "cod_muni": 18756,
+          "municipio": "SOLANO"
+        },
+        {
+          "cod_muni": 18785,
+          "municipio": "SOLITA"
+        },
+        {
+          "cod_muni": 18860,
+          "municipio": "VALPARAISO"
+        }
+      ],
+      "CASANARE": [
+        {
+          "cod_muni": 85010,
+          "municipio": "AGUAZUL"
+        },
+        {
+          "cod_muni": 85015,
+          "municipio": "CHAMEZA"
+        },
+        {
+          "cod_muni": 85125,
+          "municipio": "HATO COROZAL"
+        },
+        {
+          "cod_muni": 85136,
+          "municipio": "LA SALINA"
+        },
+        {
+          "cod_muni": 85139,
+          "municipio": "MANI"
+        },
+        {
+          "cod_muni": 85162,
+          "municipio": "MONTERREY"
+        },
+        {
+          "cod_muni": 85225,
+          "municipio": "NUNCHIA"
+        },
+        {
+          "cod_muni": 85230,
+          "municipio": "OROCUE"
+        },
+        {
+          "cod_muni": 85250,
+          "municipio": "PAZ DE ARIPORO"
+        },
+        {
+          "cod_muni": 85263,
+          "municipio": "PORE"
+        },
+        {
+          "cod_muni": 85279,
+          "municipio": "RECETOR"
+        },
+        {
+          "cod_muni": 85300,
+          "municipio": "SABANALARGA"
+        },
+        {
+          "cod_muni": 85315,
+          "municipio": "SACAMA"
+        },
+        {
+          "cod_muni": 85325,
+          "municipio": "SAN LUIS DE PALENQUE"
+        },
+        {
+          "cod_muni": 85400,
+          "municipio": "TAMARA"
+        },
+        {
+          "cod_muni": 85410,
+          "municipio": "TAURAMENA"
+        },
+        {
+          "cod_muni": 85430,
+          "municipio": "TRINIDAD"
+        },
+        {
+          "cod_muni": 85440,
+          "municipio": "VILLANUEVA"
+        },
+        {
+          "cod_muni": 85001,
+          "municipio": "YOPAL"
+        }
+      ],
+      "CAUCA": [
+        {
+          "cod_muni": 19022,
+          "municipio": "ALMAGUER"
+        },
+        {
+          "cod_muni": 19050,
+          "municipio": "ARGELIA"
+        },
+        {
+          "cod_muni": 19075,
+          "municipio": "BALBOA"
+        },
+        {
+          "cod_muni": 19100,
+          "municipio": "BOLIVAR"
+        },
+        {
+          "cod_muni": 19110,
+          "municipio": "BUENOS AIRES"
+        },
+        {
+          "cod_muni": 19130,
+          "municipio": "CAJIBIO"
+        },
+        {
+          "cod_muni": 19137,
+          "municipio": "CALDONO"
+        },
+        {
+          "cod_muni": 19142,
+          "municipio": "CALOTO"
+        },
+        {
+          "cod_muni": 19212,
+          "municipio": "CORINTO"
+        },
+        {
+          "cod_muni": 19256,
+          "municipio": "EL TAMBO"
+        },
+        {
+          "cod_muni": 19290,
+          "municipio": "FLORENCIA"
+        },
+        {
+          "cod_muni": 19300,
+          "municipio": "GUACHENE"
+        },
+        {
+          "cod_muni": 19318,
+          "municipio": "GUAPI"
+        },
+        {
+          "cod_muni": 19355,
+          "municipio": "INZA"
+        },
+        {
+          "cod_muni": 19364,
+          "municipio": "JAMBALO"
+        },
+        {
+          "cod_muni": 19392,
+          "municipio": "LA SIERRA"
+        },
+        {
+          "cod_muni": 19397,
+          "municipio": "LA VEGA"
+        },
+        {
+          "cod_muni": 19418,
+          "municipio": "LOPEZ DE MICAY"
+        },
+        {
+          "cod_muni": 19450,
+          "municipio": "MERCADERES"
+        },
+        {
+          "cod_muni": 19455,
+          "municipio": "MIRANDA"
+        },
+        {
+          "cod_muni": 19473,
+          "municipio": "MORALES"
+        },
+        {
+          "cod_muni": 19513,
+          "municipio": "PADILLA"
+        },
+        {
+          "cod_muni": 19517,
+          "municipio": "PAEZ"
+        },
+        {
+          "cod_muni": 19532,
+          "municipio": "PATIA"
+        },
+        {
+          "cod_muni": 19533,
+          "municipio": "PIAMONTE"
+        },
+        {
+          "cod_muni": 19548,
+          "municipio": "PIENDAMO - TUNIA"
+        },
+        {
+          "cod_muni": 19001,
+          "municipio": "POPAYAN"
+        },
+        {
+          "cod_muni": 19573,
+          "municipio": "PUERTO TEJADA"
+        },
+        {
+          "cod_muni": 19585,
+          "municipio": "PURACE"
+        },
+        {
+          "cod_muni": 19622,
+          "municipio": "ROSAS"
+        },
+        {
+          "cod_muni": 19693,
+          "municipio": "SAN SEBASTIAN"
+        },
+        {
+          "cod_muni": 19701,
+          "municipio": "SANTA ROSA"
+        },
+        {
+          "cod_muni": 19698,
+          "municipio": "SANTANDER DE QUILICHAO"
+        },
+        {
+          "cod_muni": 19743,
+          "municipio": "SILVIA"
+        },
+        {
+          "cod_muni": 19760,
+          "municipio": "SOTARA PAISPAMBA"
+        },
+        {
+          "cod_muni": 19780,
+          "municipio": "SUAREZ"
+        },
+        {
+          "cod_muni": 19785,
+          "municipio": "SUCRE"
+        },
+        {
+          "cod_muni": 19807,
+          "municipio": "TIMBIO"
+        },
+        {
+          "cod_muni": 19809,
+          "municipio": "TIMBIQUI"
+        },
+        {
+          "cod_muni": 19821,
+          "municipio": "TORIBIO"
+        },
+        {
+          "cod_muni": 19824,
+          "municipio": "TOTORO"
+        },
+        {
+          "cod_muni": 19845,
+          "municipio": "VILLA RICA"
+        }
+      ],
+      "CESAR": [
+        {
+          "cod_muni": 20011,
+          "municipio": "AGUACHICA"
+        },
+        {
+          "cod_muni": 20013,
+          "municipio": "AGUSTIN CODAZZI"
+        },
+        {
+          "cod_muni": 20032,
+          "municipio": "ASTREA"
+        },
+        {
+          "cod_muni": 20045,
+          "municipio": "BECERRIL"
+        },
+        {
+          "cod_muni": 20060,
+          "municipio": "BOSCONIA"
+        },
+        {
+          "cod_muni": 20175,
+          "municipio": "CHIMICHAGUA"
+        },
+        {
+          "cod_muni": 20178,
+          "municipio": "CHIRIGUANA"
+        },
+        {
+          "cod_muni": 20228,
+          "municipio": "CURUMANI"
+        },
+        {
+          "cod_muni": 20238,
+          "municipio": "EL COPEY"
+        },
+        {
+          "cod_muni": 20250,
+          "municipio": "EL PASO"
+        },
+        {
+          "cod_muni": 20295,
+          "municipio": "GAMARRA"
+        },
+        {
+          "cod_muni": 20310,
+          "municipio": "GONZALEZ"
+        },
+        {
+          "cod_muni": 20383,
+          "municipio": "LA GLORIA"
+        },
+        {
+          "cod_muni": 20400,
+          "municipio": "LA JAGUA DE IBIRICO"
+        },
+        {
+          "cod_muni": 20621,
+          "municipio": "LA PAZ"
+        },
+        {
+          "cod_muni": 20443,
+          "municipio": "MANAURE BALCON DEL CESAR"
+        },
+        {
+          "cod_muni": 20517,
+          "municipio": "PAILITAS"
+        },
+        {
+          "cod_muni": 20550,
+          "municipio": "PELAYA"
+        },
+        {
+          "cod_muni": 20570,
+          "municipio": "PUEBLO BELLO"
+        },
+        {
+          "cod_muni": 20614,
+          "municipio": "RIO DE ORO"
+        },
+        {
+          "cod_muni": 20710,
+          "municipio": "SAN ALBERTO"
+        },
+        {
+          "cod_muni": 20750,
+          "municipio": "SAN DIEGO"
+        },
+        {
+          "cod_muni": 20770,
+          "municipio": "SAN MARTIN"
+        },
+        {
+          "cod_muni": 20787,
+          "municipio": "TAMALAMEQUE"
+        },
+        {
+          "cod_muni": 20001,
+          "municipio": "VALLEDUPAR"
+        }
+      ],
+      "CHOCO": [
+        {
+          "cod_muni": 27006,
+          "municipio": "ACANDI"
+        },
+        {
+          "cod_muni": 27025,
+          "municipio": "ALTO BAUDO"
+        },
+        {
+          "cod_muni": 27050,
+          "municipio": "ATRATO"
+        },
+        {
+          "cod_muni": 27073,
+          "municipio": "BAGADO"
+        },
+        {
+          "cod_muni": 27075,
+          "municipio": "BAHIA SOLANO"
+        },
+        {
+          "cod_muni": 27077,
+          "municipio": "BAJO BAUDO"
+        },
+        {
+          "cod_muni": 27099,
+          "municipio": "BOJAYA"
+        },
+        {
+          "cod_muni": 27150,
+          "municipio": "CARMEN DEL DARIEN"
+        },
+        {
+          "cod_muni": 27160,
+          "municipio": "CERTEGUI"
+        },
+        {
+          "cod_muni": 27205,
+          "municipio": "CONDOTO"
+        },
+        {
+          "cod_muni": 27135,
+          "municipio": "EL CANTON DEL SAN PABLO"
+        },
+        {
+          "cod_muni": 27245,
+          "municipio": "EL CARMEN DE ATRATO"
+        },
+        {
+          "cod_muni": 27250,
+          "municipio": "EL LITORAL DEL SAN JUAN"
+        },
+        {
+          "cod_muni": 27361,
+          "municipio": "ISTMINA"
+        },
+        {
+          "cod_muni": 27372,
+          "municipio": "JURADO"
+        },
+        {
+          "cod_muni": 27413,
+          "municipio": "LLORO"
+        },
+        {
+          "cod_muni": 27425,
+          "municipio": "MEDIO ATRATO"
+        },
+        {
+          "cod_muni": 27430,
+          "municipio": "MEDIO BAUDO"
+        },
+        {
+          "cod_muni": 27450,
+          "municipio": "MEDIO SAN JUAN"
+        },
+        {
+          "cod_muni": 27491,
+          "municipio": "NOVITA"
+        },
+        {
+          "cod_muni": 27495,
+          "municipio": "NUQUI"
+        },
+        {
+          "cod_muni": 27001,
+          "municipio": "QUIBDO"
+        },
+        {
+          "cod_muni": 27580,
+          "municipio": "RIO IRO"
+        },
+        {
+          "cod_muni": 27600,
+          "municipio": "RIO QUITO"
+        },
+        {
+          "cod_muni": 27615,
+          "municipio": "RIOSUCIO"
+        },
+        {
+          "cod_muni": 27660,
+          "municipio": "SAN JOSE DEL PALMAR"
+        },
+        {
+          "cod_muni": 27745,
+          "municipio": "SIPI"
+        },
+        {
+          "cod_muni": 27787,
+          "municipio": "TADO"
+        },
+        {
+          "cod_muni": 27800,
+          "municipio": "UNGUIA"
+        },
+        {
+          "cod_muni": 27810,
+          "municipio": "UNION PANAMERICANA"
+        }
+      ],
+      "CORDOBA": [
+        {
+          "cod_muni": 23068,
+          "municipio": "AYAPEL"
+        },
+        {
+          "cod_muni": 23079,
+          "municipio": "BUENAVISTA"
+        },
+        {
+          "cod_muni": 23090,
+          "municipio": "CANALETE"
+        },
+        {
+          "cod_muni": 23162,
+          "municipio": "CERETE"
+        },
+        {
+          "cod_muni": 23168,
+          "municipio": "CHIMA"
+        },
+        {
+          "cod_muni": 23182,
+          "municipio": "CHINU"
+        },
+        {
+          "cod_muni": 23189,
+          "municipio": "CIENAGA DE ORO"
+        },
+        {
+          "cod_muni": 23300,
+          "municipio": "COTORRA"
+        },
+        {
+          "cod_muni": 23350,
+          "municipio": "LA APARTADA"
+        },
+        {
+          "cod_muni": 23417,
+          "municipio": "LORICA"
+        },
+        {
+          "cod_muni": 23419,
+          "municipio": "LOS CORDOBAS"
+        },
+        {
+          "cod_muni": 23464,
+          "municipio": "MOMIL"
+        },
+        {
+          "cod_muni": 23466,
+          "municipio": "MONTELIBANO"
+        },
+        {
+          "cod_muni": 23001,
+          "municipio": "MONTERIA"
+        },
+        {
+          "cod_muni": 23500,
+          "municipio": "MOÑITOS"
+        },
+        {
+          "cod_muni": 23555,
+          "municipio": "PLANETA RICA"
+        },
+        {
+          "cod_muni": 23570,
+          "municipio": "PUEBLO NUEVO"
+        },
+        {
+          "cod_muni": 23574,
+          "municipio": "PUERTO ESCONDIDO"
+        },
+        {
+          "cod_muni": 23580,
+          "municipio": "PUERTO LIBERTADOR"
+        },
+        {
+          "cod_muni": 23586,
+          "municipio": "PURISIMA DE LA CONCEPCION"
+        },
+        {
+          "cod_muni": 23660,
+          "municipio": "SAHAGUN"
+        },
+        {
+          "cod_muni": 23670,
+          "municipio": "SAN ANDRES DE SOTAVENTO"
+        },
+        {
+          "cod_muni": 23672,
+          "municipio": "SAN ANTERO"
+        },
+        {
+          "cod_muni": 23675,
+          "municipio": "SAN BERNARDO DEL VIENTO"
+        },
+        {
+          "cod_muni": 23678,
+          "municipio": "SAN CARLOS"
+        },
+        {
+          "cod_muni": 23682,
+          "municipio": "SAN JOSE DE URE"
+        },
+        {
+          "cod_muni": 23686,
+          "municipio": "SAN PELAYO"
+        },
+        {
+          "cod_muni": 23807,
+          "municipio": "TIERRALTA"
+        },
+        {
+          "cod_muni": 23815,
+          "municipio": "TUCHIN"
+        },
+        {
+          "cod_muni": 23855,
+          "municipio": "VALENCIA"
+        }
+      ],
+      "CUNDINAMARCA": [
+        {
+          "cod_muni": 25001,
+          "municipio": "AGUA DE DIOS"
+        },
+        {
+          "cod_muni": 25019,
+          "municipio": "ALBAN"
+        },
+        {
+          "cod_muni": 25035,
+          "municipio": "ANAPOIMA"
+        },
+        {
+          "cod_muni": 25040,
+          "municipio": "ANOLAIMA"
+        },
+        {
+          "cod_muni": 25599,
+          "municipio": "APULO"
+        },
+        {
+          "cod_muni": 25053,
+          "municipio": "ARBELAEZ"
+        },
+        {
+          "cod_muni": 25086,
+          "municipio": "BELTRAN"
+        },
+        {
+          "cod_muni": 25095,
+          "municipio": "BITUIMA"
+        },
+        {
+          "cod_muni": 25099,
+          "municipio": "BOJACA"
+        },
+        {
+          "cod_muni": 25120,
+          "municipio": "CABRERA"
+        },
+        {
+          "cod_muni": 25123,
+          "municipio": "CACHIPAY"
+        },
+        {
+          "cod_muni": 25126,
+          "municipio": "CAJICA"
+        },
+        {
+          "cod_muni": 25148,
+          "municipio": "CAPARRAPI"
+        },
+        {
+          "cod_muni": 25151,
+          "municipio": "CAQUEZA"
+        },
+        {
+          "cod_muni": 25154,
+          "municipio": "CARMEN DE CARUPA"
+        },
+        {
+          "cod_muni": 25168,
+          "municipio": "CHAGUANI"
+        },
+        {
+          "cod_muni": 25175,
+          "municipio": "CHIA"
+        },
+        {
+          "cod_muni": 25178,
+          "municipio": "CHIPAQUE"
+        },
+        {
+          "cod_muni": 25181,
+          "municipio": "CHOACHI"
+        },
+        {
+          "cod_muni": 25183,
+          "municipio": "CHOCONTA"
+        },
+        {
+          "cod_muni": 25200,
+          "municipio": "COGUA"
+        },
+        {
+          "cod_muni": 25214,
+          "municipio": "COTA"
+        },
+        {
+          "cod_muni": 25224,
+          "municipio": "CUCUNUBA"
+        },
+        {
+          "cod_muni": 25245,
+          "municipio": "EL COLEGIO"
+        },
+        {
+          "cod_muni": 25258,
+          "municipio": "EL PEÑON"
+        },
+        {
+          "cod_muni": 25260,
+          "municipio": "EL ROSAL"
+        },
+        {
+          "cod_muni": 25269,
+          "municipio": "FACATATIVA"
+        },
+        {
+          "cod_muni": 25279,
+          "municipio": "FOMEQUE"
+        },
+        {
+          "cod_muni": 25281,
+          "municipio": "FOSCA"
+        },
+        {
+          "cod_muni": 25286,
+          "municipio": "FUNZA"
+        },
+        {
+          "cod_muni": 25288,
+          "municipio": "FUQUENE"
+        },
+        {
+          "cod_muni": 25290,
+          "municipio": "FUSAGASUGA"
+        },
+        {
+          "cod_muni": 25293,
+          "municipio": "GACHALA"
+        },
+        {
+          "cod_muni": 25295,
+          "municipio": "GACHANCIPA"
+        },
+        {
+          "cod_muni": 25297,
+          "municipio": "GACHETA"
+        },
+        {
+          "cod_muni": 25299,
+          "municipio": "GAMA"
+        },
+        {
+          "cod_muni": 25307,
+          "municipio": "GIRARDOT"
+        },
+        {
+          "cod_muni": 25312,
+          "municipio": "GRANADA"
+        },
+        {
+          "cod_muni": 25317,
+          "municipio": "GUACHETA"
+        },
+        {
+          "cod_muni": 25320,
+          "municipio": "GUADUAS"
+        },
+        {
+          "cod_muni": 25322,
+          "municipio": "GUASCA"
+        },
+        {
+          "cod_muni": 25324,
+          "municipio": "GUATAQUI"
+        },
+        {
+          "cod_muni": 25326,
+          "municipio": "GUATAVITA"
+        },
+        {
+          "cod_muni": 25328,
+          "municipio": "GUAYABAL DE SIQUIMA"
+        },
+        {
+          "cod_muni": 25335,
+          "municipio": "GUAYABETAL"
+        },
+        {
+          "cod_muni": 25339,
+          "municipio": "GUTIERREZ"
+        },
+        {
+          "cod_muni": 25368,
+          "municipio": "JERUSALEN"
+        },
+        {
+          "cod_muni": 25372,
+          "municipio": "JUNIN"
+        },
+        {
+          "cod_muni": 25377,
+          "municipio": "LA CALERA"
+        },
+        {
+          "cod_muni": 25386,
+          "municipio": "LA MESA"
+        },
+        {
+          "cod_muni": 25394,
+          "municipio": "LA PALMA"
+        },
+        {
+          "cod_muni": 25398,
+          "municipio": "LA PEÑA"
+        },
+        {
+          "cod_muni": 25402,
+          "municipio": "LA VEGA"
+        },
+        {
+          "cod_muni": 25407,
+          "municipio": "LENGUAZAQUE"
+        },
+        {
+          "cod_muni": 25426,
+          "municipio": "MACHETA"
+        },
+        {
+          "cod_muni": 25430,
+          "municipio": "MADRID"
+        },
+        {
+          "cod_muni": 25436,
+          "municipio": "MANTA"
+        },
+        {
+          "cod_muni": 25438,
+          "municipio": "MEDINA"
+        },
+        {
+          "cod_muni": 25473,
+          "municipio": "MOSQUERA"
+        },
+        {
+          "cod_muni": 25483,
+          "municipio": "NARIÑO"
+        },
+        {
+          "cod_muni": 25486,
+          "municipio": "NEMOCON"
+        },
+        {
+          "cod_muni": 25488,
+          "municipio": "NILO"
+        },
+        {
+          "cod_muni": 25489,
+          "municipio": "NIMAIMA"
+        },
+        {
+          "cod_muni": 25491,
+          "municipio": "NOCAIMA"
+        },
+        {
+          "cod_muni": 25513,
+          "municipio": "PACHO"
+        },
+        {
+          "cod_muni": 25518,
+          "municipio": "PAIME"
+        },
+        {
+          "cod_muni": 25524,
+          "municipio": "PANDI"
+        },
+        {
+          "cod_muni": 25530,
+          "municipio": "PARATEBUENO"
+        },
+        {
+          "cod_muni": 25535,
+          "municipio": "PASCA"
+        },
+        {
+          "cod_muni": 25572,
+          "municipio": "PUERTO SALGAR"
+        },
+        {
+          "cod_muni": 25580,
+          "municipio": "PULI"
+        },
+        {
+          "cod_muni": 25592,
+          "municipio": "QUEBRADANEGRA"
+        },
+        {
+          "cod_muni": 25594,
+          "municipio": "QUETAME"
+        },
+        {
+          "cod_muni": 25596,
+          "municipio": "QUIPILE"
+        },
+        {
+          "cod_muni": 25612,
+          "municipio": "RICAURTE"
+        },
+        {
+          "cod_muni": 25645,
+          "municipio": "SAN ANTONIO DEL TEQUENDAMA"
+        },
+        {
+          "cod_muni": 25649,
+          "municipio": "SAN BERNARDO"
+        },
+        {
+          "cod_muni": 25653,
+          "municipio": "SAN CAYETANO"
+        },
+        {
+          "cod_muni": 25658,
+          "municipio": "SAN FRANCISCO"
+        },
+        {
+          "cod_muni": 25662,
+          "municipio": "SAN JUAN DE RIOSECO"
+        },
+        {
+          "cod_muni": 25718,
+          "municipio": "SASAIMA"
+        },
+        {
+          "cod_muni": 25736,
+          "municipio": "SESQUILE"
+        },
+        {
+          "cod_muni": 25740,
+          "municipio": "SIBATE"
+        },
+        {
+          "cod_muni": 25743,
+          "municipio": "SILVANIA"
+        },
+        {
+          "cod_muni": 25745,
+          "municipio": "SIMIJACA"
+        },
+        {
+          "cod_muni": 25754,
+          "municipio": "SOACHA"
+        },
+        {
+          "cod_muni": 25758,
+          "municipio": "SOPO"
+        },
+        {
+          "cod_muni": 25769,
+          "municipio": "SUBACHOQUE"
+        },
+        {
+          "cod_muni": 25772,
+          "municipio": "SUESCA"
+        },
+        {
+          "cod_muni": 25777,
+          "municipio": "SUPATA"
+        },
+        {
+          "cod_muni": 25779,
+          "municipio": "SUSA"
+        },
+        {
+          "cod_muni": 25781,
+          "municipio": "SUTATAUSA"
+        },
+        {
+          "cod_muni": 25785,
+          "municipio": "TABIO"
+        },
+        {
+          "cod_muni": 25793,
+          "municipio": "TAUSA"
+        },
+        {
+          "cod_muni": 25797,
+          "municipio": "TENA"
+        },
+        {
+          "cod_muni": 25799,
+          "municipio": "TENJO"
+        },
+        {
+          "cod_muni": 25805,
+          "municipio": "TIBACUY"
+        },
+        {
+          "cod_muni": 25807,
+          "municipio": "TIBIRITA"
+        },
+        {
+          "cod_muni": 25815,
+          "municipio": "TOCAIMA"
+        },
+        {
+          "cod_muni": 25817,
+          "municipio": "TOCANCIPA"
+        },
+        {
+          "cod_muni": 25823,
+          "municipio": "TOPAIPI"
+        },
+        {
+          "cod_muni": 25839,
+          "municipio": "UBALA"
+        },
+        {
+          "cod_muni": 25841,
+          "municipio": "UBAQUE"
+        },
+        {
+          "cod_muni": 25845,
+          "municipio": "UNE"
+        },
+        {
+          "cod_muni": 25851,
+          "municipio": "UTICA"
+        },
+        {
+          "cod_muni": 25506,
+          "municipio": "VENECIA"
+        },
+        {
+          "cod_muni": 25862,
+          "municipio": "VERGARA"
+        },
+        {
+          "cod_muni": 25867,
+          "municipio": "VIANI"
+        },
+        {
+          "cod_muni": 25843,
+          "municipio": "VILLA DE SAN DIEGO DE UBATE"
+        },
+        {
+          "cod_muni": 25871,
+          "municipio": "VILLAGOMEZ"
+        },
+        {
+          "cod_muni": 25873,
+          "municipio": "VILLAPINZON"
+        },
+        {
+          "cod_muni": 25875,
+          "municipio": "VILLETA"
+        },
+        {
+          "cod_muni": 25878,
+          "municipio": "VIOTA"
+        },
+        {
+          "cod_muni": 25885,
+          "municipio": "YACOPI"
+        },
+        {
+          "cod_muni": 25898,
+          "municipio": "ZIPACON"
+        },
+        {
+          "cod_muni": 25899,
+          "municipio": "ZIPAQUIRA"
+        }
+      ],
+      "GUAINIA": [
+        {
+          "cod_muni": 94001,
+          "municipio": "INIRIDA"
+        }
+      ],
+      "GUAVIARE": [
+        {
+          "cod_muni": 95015,
+          "municipio": "CALAMAR"
+        },
+        {
+          "cod_muni": 95025,
+          "municipio": "EL RETORNO"
+        },
+        {
+          "cod_muni": 95200,
+          "municipio": "MIRAFLORES"
+        },
+        {
+          "cod_muni": 95001,
+          "municipio": "SAN JOSE DEL GUAVIARE"
+        }
+      ],
+      "HUILA": [
+        {
+          "cod_muni": 41006,
+          "municipio": "ACEVEDO"
+        },
+        {
+          "cod_muni": 41013,
+          "municipio": "AGRADO"
+        },
+        {
+          "cod_muni": 41016,
+          "municipio": "AIPE"
+        },
+        {
+          "cod_muni": 41020,
+          "municipio": "ALGECIRAS"
+        },
+        {
+          "cod_muni": 41026,
+          "municipio": "ALTAMIRA"
+        },
+        {
+          "cod_muni": 41078,
+          "municipio": "BARAYA"
+        },
+        {
+          "cod_muni": 41132,
+          "municipio": "CAMPOALEGRE"
+        },
+        {
+          "cod_muni": 41206,
+          "municipio": "COLOMBIA"
+        },
+        {
+          "cod_muni": 41244,
+          "municipio": "ELIAS"
+        },
+        {
+          "cod_muni": 41298,
+          "municipio": "GARZON"
+        },
+        {
+          "cod_muni": 41306,
+          "municipio": "GIGANTE"
+        },
+        {
+          "cod_muni": 41319,
+          "municipio": "GUADALUPE"
+        },
+        {
+          "cod_muni": 41349,
+          "municipio": "HOBO"
+        },
+        {
+          "cod_muni": 41357,
+          "municipio": "IQUIRA"
+        },
+        {
+          "cod_muni": 41359,
+          "municipio": "ISNOS"
+        },
+        {
+          "cod_muni": 41378,
+          "municipio": "LA ARGENTINA"
+        },
+        {
+          "cod_muni": 41396,
+          "municipio": "LA PLATA"
+        },
+        {
+          "cod_muni": 41483,
+          "municipio": "NATAGA"
+        },
+        {
+          "cod_muni": 41001,
+          "municipio": "NEIVA"
+        },
+        {
+          "cod_muni": 41503,
+          "municipio": "OPORAPA"
+        },
+        {
+          "cod_muni": 41518,
+          "municipio": "PAICOL"
+        },
+        {
+          "cod_muni": 41524,
+          "municipio": "PALERMO"
+        },
+        {
+          "cod_muni": 41530,
+          "municipio": "PALESTINA"
+        },
+        {
+          "cod_muni": 41548,
+          "municipio": "PITAL"
+        },
+        {
+          "cod_muni": 41551,
+          "municipio": "PITALITO"
+        },
+        {
+          "cod_muni": 41615,
+          "municipio": "RIVERA"
+        },
+        {
+          "cod_muni": 41660,
+          "municipio": "SALADOBLANCO"
+        },
+        {
+          "cod_muni": 41668,
+          "municipio": "SAN AGUSTIN"
+        },
+        {
+          "cod_muni": 41676,
+          "municipio": "SANTA MARIA"
+        },
+        {
+          "cod_muni": 41770,
+          "municipio": "SUAZA"
+        },
+        {
+          "cod_muni": 41791,
+          "municipio": "TARQUI"
+        },
+        {
+          "cod_muni": 41799,
+          "municipio": "TELLO"
+        },
+        {
+          "cod_muni": 41801,
+          "municipio": "TERUEL"
+        },
+        {
+          "cod_muni": 41797,
+          "municipio": "TESALIA"
+        },
+        {
+          "cod_muni": 41807,
+          "municipio": "TIMANA"
+        },
+        {
+          "cod_muni": 41872,
+          "municipio": "VILLAVIEJA"
+        },
+        {
+          "cod_muni": 41885,
+          "municipio": "YAGUARA"
+        }
+      ],
+      "LA GUAJIRA": [
+        {
+          "cod_muni": 44035,
+          "municipio": "ALBANIA"
+        },
+        {
+          "cod_muni": 44078,
+          "municipio": "BARRANCAS"
+        },
+        {
+          "cod_muni": 44090,
+          "municipio": "DIBULLA"
+        },
+        {
+          "cod_muni": 44098,
+          "municipio": "DISTRACCION"
+        },
+        {
+          "cod_muni": 44110,
+          "municipio": "EL MOLINO"
+        },
+        {
+          "cod_muni": 44279,
+          "municipio": "FONSECA"
+        },
+        {
+          "cod_muni": 44378,
+          "municipio": "HATONUEVO"
+        },
+        {
+          "cod_muni": 44420,
+          "municipio": "LA JAGUA DEL PILAR"
+        },
+        {
+          "cod_muni": 44430,
+          "municipio": "MAICAO"
+        },
+        {
+          "cod_muni": 44560,
+          "municipio": "MANAURE"
+        },
+        {
+          "cod_muni": 44001,
+          "municipio": "RIOHACHA"
+        },
+        {
+          "cod_muni": 44650,
+          "municipio": "SAN JUAN DEL CESAR"
+        },
+        {
+          "cod_muni": 44847,
+          "municipio": "URIBIA"
+        },
+        {
+          "cod_muni": 44855,
+          "municipio": "URUMITA"
+        },
+        {
+          "cod_muni": 44874,
+          "municipio": "VILLANUEVA"
+        }
+      ],
+      "MAGDALENA": [
+        {
+          "cod_muni": 47030,
+          "municipio": "ALGARROBO"
+        },
+        {
+          "cod_muni": 47053,
+          "municipio": "ARACATACA"
+        },
+        {
+          "cod_muni": 47058,
+          "municipio": "ARIGUANI"
+        },
+        {
+          "cod_muni": 47161,
+          "municipio": "CERRO DE SAN ANTONIO"
+        },
+        {
+          "cod_muni": 47170,
+          "municipio": "CHIVOLO"
+        },
+        {
+          "cod_muni": 47189,
+          "municipio": "CIENAGA"
+        },
+        {
+          "cod_muni": 47205,
+          "municipio": "CONCORDIA"
+        },
+        {
+          "cod_muni": 47245,
+          "municipio": "EL BANCO"
+        },
+        {
+          "cod_muni": 47258,
+          "municipio": "EL PIÑON"
+        },
+        {
+          "cod_muni": 47268,
+          "municipio": "EL RETEN"
+        },
+        {
+          "cod_muni": 47288,
+          "municipio": "FUNDACION"
+        },
+        {
+          "cod_muni": 47318,
+          "municipio": "GUAMAL"
+        },
+        {
+          "cod_muni": 47460,
+          "municipio": "NUEVA GRANADA"
+        },
+        {
+          "cod_muni": 47541,
+          "municipio": "PEDRAZA"
+        },
+        {
+          "cod_muni": 47545,
+          "municipio": "PIJIÑO DEL CARMEN"
+        },
+        {
+          "cod_muni": 47551,
+          "municipio": "PIVIJAY"
+        },
+        {
+          "cod_muni": 47555,
+          "municipio": "PLATO"
+        },
+        {
+          "cod_muni": 47570,
+          "municipio": "PUEBLOVIEJO"
+        },
+        {
+          "cod_muni": 47605,
+          "municipio": "REMOLINO"
+        },
+        {
+          "cod_muni": 47660,
+          "municipio": "SABANAS DE SAN ANGEL"
+        },
+        {
+          "cod_muni": 47675,
+          "municipio": "SALAMINA"
+        },
+        {
+          "cod_muni": 47692,
+          "municipio": "SAN SEBASTIAN DE BUENAVISTA"
+        },
+        {
+          "cod_muni": 47703,
+          "municipio": "SAN ZENON"
+        },
+        {
+          "cod_muni": 47707,
+          "municipio": "SANTA ANA"
+        },
+        {
+          "cod_muni": 47720,
+          "municipio": "SANTA BARBARA DE PINTO"
+        },
+        {
+          "cod_muni": 47001,
+          "municipio": "SANTA MARTA"
+        },
+        {
+          "cod_muni": 47745,
+          "municipio": "SITIONUEVO"
+        },
+        {
+          "cod_muni": 47798,
+          "municipio": "TENERIFE"
+        },
+        {
+          "cod_muni": 47960,
+          "municipio": "ZAPAYAN"
+        },
+        {
+          "cod_muni": 47980,
+          "municipio": "ZONA BANANERA"
+        }
+      ],
+      "META": [
+        {
+          "cod_muni": 50006,
+          "municipio": "ACACIAS"
+        },
+        {
+          "cod_muni": 50110,
+          "municipio": "BARRANCA DE UPIA"
+        },
+        {
+          "cod_muni": 50124,
+          "municipio": "CABUYARO"
+        },
+        {
+          "cod_muni": 50150,
+          "municipio": "CASTILLA LA NUEVA"
+        },
+        {
+          "cod_muni": 50223,
+          "municipio": "CUBARRAL"
+        },
+        {
+          "cod_muni": 50226,
+          "municipio": "CUMARAL"
+        },
+        {
+          "cod_muni": 50245,
+          "municipio": "EL CALVARIO"
+        },
+        {
+          "cod_muni": 50251,
+          "municipio": "EL CASTILLO"
+        },
+        {
+          "cod_muni": 50270,
+          "municipio": "EL DORADO"
+        },
+        {
+          "cod_muni": 50287,
+          "municipio": "FUENTE DE ORO"
+        },
+        {
+          "cod_muni": 50313,
+          "municipio": "GRANADA"
+        },
+        {
+          "cod_muni": 50318,
+          "municipio": "GUAMAL"
+        },
+        {
+          "cod_muni": 50350,
+          "municipio": "LA MACARENA"
+        },
+        {
+          "cod_muni": 50400,
+          "municipio": "LEJANIAS"
+        },
+        {
+          "cod_muni": 50325,
+          "municipio": "MAPIRIPAN"
+        },
+        {
+          "cod_muni": 50330,
+          "municipio": "MESETAS"
+        },
+        {
+          "cod_muni": 50450,
+          "municipio": "PUERTO CONCORDIA"
+        },
+        {
+          "cod_muni": 50568,
+          "municipio": "PUERTO GAITAN"
+        },
+        {
+          "cod_muni": 50577,
+          "municipio": "PUERTO LLERAS"
+        },
+        {
+          "cod_muni": 50573,
+          "municipio": "PUERTO LOPEZ"
+        },
+        {
+          "cod_muni": 50590,
+          "municipio": "PUERTO RICO"
+        },
+        {
+          "cod_muni": 50606,
+          "municipio": "RESTREPO"
+        },
+        {
+          "cod_muni": 50680,
+          "municipio": "SAN CARLOS DE GUAROA"
+        },
+        {
+          "cod_muni": 50683,
+          "municipio": "SAN JUAN DE ARAMA"
+        },
+        {
+          "cod_muni": 50686,
+          "municipio": "SAN JUANITO"
+        },
+        {
+          "cod_muni": 50689,
+          "municipio": "SAN MARTIN"
+        },
+        {
+          "cod_muni": 50370,
+          "municipio": "URIBE"
+        },
+        {
+          "cod_muni": 50001,
+          "municipio": "VILLAVICENCIO"
+        },
+        {
+          "cod_muni": 50711,
+          "municipio": "VISTAHERMOSA"
+        }
+      ],
+      "NARIÑO": [
+        {
+          "cod_muni": 52019,
+          "municipio": "ALBAN"
+        },
+        {
+          "cod_muni": 52022,
+          "municipio": "ALDANA"
+        },
+        {
+          "cod_muni": 52036,
+          "municipio": "ANCUYA"
+        },
+        {
+          "cod_muni": 52051,
+          "municipio": "ARBOLEDA"
+        },
+        {
+          "cod_muni": 52079,
+          "municipio": "BARBACOAS"
+        },
+        {
+          "cod_muni": 52083,
+          "municipio": "BELEN"
+        },
+        {
+          "cod_muni": 52110,
+          "municipio": "BUESACO"
+        },
+        {
+          "cod_muni": 52240,
+          "municipio": "CHACHAGÜI"
+        },
+        {
+          "cod_muni": 52203,
+          "municipio": "COLON"
+        },
+        {
+          "cod_muni": 52207,
+          "municipio": "CONSACA"
+        },
+        {
+          "cod_muni": 52210,
+          "municipio": "CONTADERO"
+        },
+        {
+          "cod_muni": 52215,
+          "municipio": "CORDOBA"
+        },
+        {
+          "cod_muni": 52224,
+          "municipio": "CUASPUD CARLOSAMA"
+        },
+        {
+          "cod_muni": 52227,
+          "municipio": "CUMBAL"
+        },
+        {
+          "cod_muni": 52233,
+          "municipio": "CUMBITARA"
+        },
+        {
+          "cod_muni": 52250,
+          "municipio": "EL CHARCO"
+        },
+        {
+          "cod_muni": 52254,
+          "municipio": "EL PEÑOL"
+        },
+        {
+          "cod_muni": 52256,
+          "municipio": "EL ROSARIO"
+        },
+        {
+          "cod_muni": 52258,
+          "municipio": "EL TABLON DE GOMEZ"
+        },
+        {
+          "cod_muni": 52260,
+          "municipio": "EL TAMBO"
+        },
+        {
+          "cod_muni": 52520,
+          "municipio": "FRANCISCO PIZARRO"
+        },
+        {
+          "cod_muni": 52287,
+          "municipio": "FUNES"
+        },
+        {
+          "cod_muni": 52317,
+          "municipio": "GUACHUCAL"
+        },
+        {
+          "cod_muni": 52320,
+          "municipio": "GUAITARILLA"
+        },
+        {
+          "cod_muni": 52323,
+          "municipio": "GUALMATAN"
+        },
+        {
+          "cod_muni": 52352,
+          "municipio": "ILES"
+        },
+        {
+          "cod_muni": 52354,
+          "municipio": "IMUES"
+        },
+        {
+          "cod_muni": 52356,
+          "municipio": "IPIALES"
+        },
+        {
+          "cod_muni": 52378,
+          "municipio": "LA CRUZ"
+        },
+        {
+          "cod_muni": 52381,
+          "municipio": "LA FLORIDA"
+        },
+        {
+          "cod_muni": 52385,
+          "municipio": "LA LLANADA"
+        },
+        {
+          "cod_muni": 52390,
+          "municipio": "LA TOLA"
+        },
+        {
+          "cod_muni": 52399,
+          "municipio": "LA UNION"
+        },
+        {
+          "cod_muni": 52405,
+          "municipio": "LEIVA"
+        },
+        {
+          "cod_muni": 52411,
+          "municipio": "LINARES"
+        },
+        {
+          "cod_muni": 52418,
+          "municipio": "LOS ANDES"
+        },
+        {
+          "cod_muni": 52427,
+          "municipio": "MAGÜI"
+        },
+        {
+          "cod_muni": 52435,
+          "municipio": "MALLAMA"
+        },
+        {
+          "cod_muni": 52473,
+          "municipio": "MOSQUERA"
+        },
+        {
+          "cod_muni": 52480,
+          "municipio": "NARIÑO"
+        },
+        {
+          "cod_muni": 52490,
+          "municipio": "OLAYA HERRERA"
+        },
+        {
+          "cod_muni": 52506,
+          "municipio": "OSPINA"
+        },
+        {
+          "cod_muni": 52001,
+          "municipio": "PASTO"
+        },
+        {
+          "cod_muni": 52540,
+          "municipio": "POLICARPA"
+        },
+        {
+          "cod_muni": 52560,
+          "municipio": "POTOSI"
+        },
+        {
+          "cod_muni": 52565,
+          "municipio": "PROVIDENCIA"
+        },
+        {
+          "cod_muni": 52573,
+          "municipio": "PUERRES"
+        },
+        {
+          "cod_muni": 52585,
+          "municipio": "PUPIALES"
+        },
+        {
+          "cod_muni": 52612,
+          "municipio": "RICAURTE"
+        },
+        {
+          "cod_muni": 52621,
+          "municipio": "ROBERTO PAYAN"
+        },
+        {
+          "cod_muni": 52678,
+          "municipio": "SAMANIEGO"
+        },
+        {
+          "cod_muni": 52835,
+          "municipio": "SAN ANDRES DE TUMACO"
+        },
+        {
+          "cod_muni": 52685,
+          "municipio": "SAN BERNARDO"
+        },
+        {
+          "cod_muni": 52687,
+          "municipio": "SAN LORENZO"
+        },
+        {
+          "cod_muni": 52693,
+          "municipio": "SAN PABLO"
+        },
+        {
+          "cod_muni": 52694,
+          "municipio": "SAN PEDRO DE CARTAGO"
+        },
+        {
+          "cod_muni": 52683,
+          "municipio": "SANDONA"
+        },
+        {
+          "cod_muni": 52696,
+          "municipio": "SANTA BARBARA"
+        },
+        {
+          "cod_muni": 52699,
+          "municipio": "SANTACRUZ"
+        },
+        {
+          "cod_muni": 52720,
+          "municipio": "SAPUYES"
+        },
+        {
+          "cod_muni": 52786,
+          "municipio": "TAMINANGO"
+        },
+        {
+          "cod_muni": 52788,
+          "municipio": "TANGUA"
+        },
+        {
+          "cod_muni": 52838,
+          "municipio": "TUQUERRES"
+        },
+        {
+          "cod_muni": 52885,
+          "municipio": "YACUANQUER"
+        }
+      ],
+      "NORTE DE SANTANDER": [
+        {
+          "cod_muni": 54003,
+          "municipio": "ABREGO"
+        },
+        {
+          "cod_muni": 54051,
+          "municipio": "ARBOLEDAS"
+        },
+        {
+          "cod_muni": 54099,
+          "municipio": "BOCHALEMA"
+        },
+        {
+          "cod_muni": 54109,
+          "municipio": "BUCARASICA"
+        },
+        {
+          "cod_muni": 54128,
+          "municipio": "CACHIRA"
+        },
+        {
+          "cod_muni": 54125,
+          "municipio": "CACOTA"
+        },
+        {
+          "cod_muni": 54172,
+          "municipio": "CHINACOTA"
+        },
+        {
+          "cod_muni": 54174,
+          "municipio": "CHITAGA"
+        },
+        {
+          "cod_muni": 54206,
+          "municipio": "CONVENCION"
+        },
+        {
+          "cod_muni": 54001,
+          "municipio": "CUCUTA"
+        },
+        {
+          "cod_muni": 54223,
+          "municipio": "CUCUTILLA"
+        },
+        {
+          "cod_muni": 54239,
+          "municipio": "DURANIA"
+        },
+        {
+          "cod_muni": 54245,
+          "municipio": "EL CARMEN"
+        },
+        {
+          "cod_muni": 54250,
+          "municipio": "EL TARRA"
+        },
+        {
+          "cod_muni": 54261,
+          "municipio": "EL ZULIA"
+        },
+        {
+          "cod_muni": 54313,
+          "municipio": "GRAMALOTE"
+        },
+        {
+          "cod_muni": 54344,
+          "municipio": "HACARI"
+        },
+        {
+          "cod_muni": 54347,
+          "municipio": "HERRAN"
+        },
+        {
+          "cod_muni": 54385,
+          "municipio": "LA ESPERANZA"
+        },
+        {
+          "cod_muni": 54398,
+          "municipio": "LA PLAYA"
+        },
+        {
+          "cod_muni": 54377,
+          "municipio": "LABATECA"
+        },
+        {
+          "cod_muni": 54405,
+          "municipio": "LOS PATIOS"
+        },
+        {
+          "cod_muni": 54418,
+          "municipio": "LOURDES"
+        },
+        {
+          "cod_muni": 54480,
+          "municipio": "MUTISCUA"
+        },
+        {
+          "cod_muni": 54498,
+          "municipio": "OCAÑA"
+        },
+        {
+          "cod_muni": 54518,
+          "municipio": "PAMPLONA"
+        },
+        {
+          "cod_muni": 54520,
+          "municipio": "PAMPLONITA"
+        },
+        {
+          "cod_muni": 54553,
+          "municipio": "PUERTO SANTANDER"
+        },
+        {
+          "cod_muni": 54599,
+          "municipio": "RAGONVALIA"
+        },
+        {
+          "cod_muni": 54660,
+          "municipio": "SALAZAR"
+        },
+        {
+          "cod_muni": 54670,
+          "municipio": "SAN CALIXTO"
+        },
+        {
+          "cod_muni": 54673,
+          "municipio": "SAN CAYETANO"
+        },
+        {
+          "cod_muni": 54680,
+          "municipio": "SANTIAGO"
+        },
+        {
+          "cod_muni": 54720,
+          "municipio": "SARDINATA"
+        },
+        {
+          "cod_muni": 54743,
+          "municipio": "SILOS"
+        },
+        {
+          "cod_muni": 54800,
+          "municipio": "TEORAMA"
+        },
+        {
+          "cod_muni": 54810,
+          "municipio": "TIBU"
+        },
+        {
+          "cod_muni": 54820,
+          "municipio": "TOLEDO"
+        },
+        {
+          "cod_muni": 54871,
+          "municipio": "VILLA CARO"
+        },
+        {
+          "cod_muni": 54874,
+          "municipio": "VILLA DEL ROSARIO"
+        }
+      ],
+      "PUTUMAYO": [
+        {
+          "cod_muni": 86001,
+          "municipio": "MOCOA"
+        },
+        {
+          "cod_muni": 86320,
+          "municipio": "ORITO"
+        },
+        {
+          "cod_muni": 86568,
+          "municipio": "PUERTO ASIS"
+        },
+        {
+          "cod_muni": 86569,
+          "municipio": "PUERTO CAICEDO"
+        },
+        {
+          "cod_muni": 86571,
+          "municipio": "PUERTO GUZMAN"
+        },
+        {
+          "cod_muni": 86573,
+          "municipio": "PUERTO LEGUIZAMO"
+        },
+        {
+          "cod_muni": 86755,
+          "municipio": "SAN FRANCISCO"
+        },
+        {
+          "cod_muni": 86757,
+          "municipio": "SAN MIGUEL"
+        },
+        {
+          "cod_muni": 86760,
+          "municipio": "SANTIAGO"
+        },
+        {
+          "cod_muni": 86749,
+          "municipio": "SIBUNDOY"
+        },
+        {
+          "cod_muni": 86865,
+          "municipio": "VALLE DEL GUAMUEZ"
+        },
+        {
+          "cod_muni": 86885,
+          "municipio": "VILLAGARZON"
+        }
+      ],
+      "QUINDIO": [
+        {
+          "cod_muni": 63001,
+          "municipio": "ARMENIA"
+        },
+        {
+          "cod_muni": 63111,
+          "municipio": "BUENAVISTA"
+        },
+        {
+          "cod_muni": 63130,
+          "municipio": "CALARCA"
+        },
+        {
+          "cod_muni": 63190,
+          "municipio": "CIRCASIA"
+        },
+        {
+          "cod_muni": 63212,
+          "municipio": "CORDOBA"
+        },
+        {
+          "cod_muni": 63272,
+          "municipio": "FILANDIA"
+        },
+        {
+          "cod_muni": 63302,
+          "municipio": "GENOVA"
+        },
+        {
+          "cod_muni": 63401,
+          "municipio": "LA TEBAIDA"
+        },
+        {
+          "cod_muni": 63470,
+          "municipio": "MONTENEGRO"
+        },
+        {
+          "cod_muni": 63548,
+          "municipio": "PIJAO"
+        },
+        {
+          "cod_muni": 63594,
+          "municipio": "QUIMBAYA"
+        },
+        {
+          "cod_muni": 63690,
+          "municipio": "SALENTO"
+        }
+      ],
+      "RISARALDA": [
+        {
+          "cod_muni": 66045,
+          "municipio": "APIA"
+        },
+        {
+          "cod_muni": 66075,
+          "municipio": "BALBOA"
+        },
+        {
+          "cod_muni": 66088,
+          "municipio": "BELEN DE UMBRIA"
+        },
+        {
+          "cod_muni": 66170,
+          "municipio": "DOSQUEBRADAS"
+        },
+        {
+          "cod_muni": 66318,
+          "municipio": "GUATICA"
+        },
+        {
+          "cod_muni": 66383,
+          "municipio": "LA CELIA"
+        },
+        {
+          "cod_muni": 66400,
+          "municipio": "LA VIRGINIA"
+        },
+        {
+          "cod_muni": 66440,
+          "municipio": "MARSELLA"
+        },
+        {
+          "cod_muni": 66456,
+          "municipio": "MISTRATO"
+        },
+        {
+          "cod_muni": 66001,
+          "municipio": "PEREIRA"
+        },
+        {
+          "cod_muni": 66572,
+          "municipio": "PUEBLO RICO"
+        },
+        {
+          "cod_muni": 66594,
+          "municipio": "QUINCHIA"
+        },
+        {
+          "cod_muni": 66682,
+          "municipio": "SANTA ROSA DE CABAL"
+        },
+        {
+          "cod_muni": 66687,
+          "municipio": "SANTUARIO"
+        }
+      ],
+      "SAN ANDRES ISLAS": [
+        {
+          "cod_muni": 88564,
+          "municipio": "PROVIDENCIA"
+        },
+        {
+          "cod_muni": 88001,
+          "municipio": "SAN ANDRES"
+        }
+      ],
+      "SANTANDER": [
+        {
+          "cod_muni": 68013,
+          "municipio": "AGUADA"
+        },
+        {
+          "cod_muni": 68020,
+          "municipio": "ALBANIA"
+        },
+        {
+          "cod_muni": 68051,
+          "municipio": "ARATOCA"
+        },
+        {
+          "cod_muni": 68077,
+          "municipio": "BARBOSA"
+        },
+        {
+          "cod_muni": 68079,
+          "municipio": "BARICHARA"
+        },
+        {
+          "cod_muni": 68081,
+          "municipio": "BARRANCABERMEJA"
+        },
+        {
+          "cod_muni": 68092,
+          "municipio": "BETULIA"
+        },
+        {
+          "cod_muni": 68101,
+          "municipio": "BOLIVAR"
+        },
+        {
+          "cod_muni": 68001,
+          "municipio": "BUCARAMANGA"
+        },
+        {
+          "cod_muni": 68121,
+          "municipio": "CABRERA"
+        },
+        {
+          "cod_muni": 68147,
+          "municipio": "CAPITANEJO"
+        },
+        {
+          "cod_muni": 68152,
+          "municipio": "CARCASI"
+        },
+        {
+          "cod_muni": 68162,
+          "municipio": "CERRITO"
+        },
+        {
+          "cod_muni": 68167,
+          "municipio": "CHARALA"
+        },
+        {
+          "cod_muni": 68169,
+          "municipio": "CHARTA"
+        },
+        {
+          "cod_muni": 68176,
+          "municipio": "CHIMA"
+        },
+        {
+          "cod_muni": 68179,
+          "municipio": "CHIPATA"
+        },
+        {
+          "cod_muni": 68190,
+          "municipio": "CIMITARRA"
+        },
+        {
+          "cod_muni": 68209,
+          "municipio": "CONFINES"
+        },
+        {
+          "cod_muni": 68211,
+          "municipio": "CONTRATACION"
+        },
+        {
+          "cod_muni": 68217,
+          "municipio": "COROMORO"
+        },
+        {
+          "cod_muni": 68229,
+          "municipio": "CURITI"
+        },
+        {
+          "cod_muni": 68235,
+          "municipio": "EL CARMEN DE CHUCURI"
+        },
+        {
+          "cod_muni": 68245,
+          "municipio": "EL GUACAMAYO"
+        },
+        {
+          "cod_muni": 68250,
+          "municipio": "EL PEÑON"
+        },
+        {
+          "cod_muni": 68255,
+          "municipio": "EL PLAYON"
+        },
+        {
+          "cod_muni": 68264,
+          "municipio": "ENCINO"
+        },
+        {
+          "cod_muni": 68266,
+          "municipio": "ENCISO"
+        },
+        {
+          "cod_muni": 68271,
+          "municipio": "FLORIAN"
+        },
+        {
+          "cod_muni": 68276,
+          "municipio": "FLORIDABLANCA"
+        },
+        {
+          "cod_muni": 68296,
+          "municipio": "GALAN"
+        },
+        {
+          "cod_muni": 68298,
+          "municipio": "GAMBITA"
+        },
+        {
+          "cod_muni": 68307,
+          "municipio": "GIRON"
+        },
+        {
+          "cod_muni": 68318,
+          "municipio": "GUACA"
+        },
+        {
+          "cod_muni": 68320,
+          "municipio": "GUADALUPE"
+        },
+        {
+          "cod_muni": 68322,
+          "municipio": "GUAPOTA"
+        },
+        {
+          "cod_muni": 68324,
+          "municipio": "GUAVATA"
+        },
+        {
+          "cod_muni": 68327,
+          "municipio": "GÜEPSA"
+        },
+        {
+          "cod_muni": 68344,
+          "municipio": "HATO"
+        },
+        {
+          "cod_muni": 68368,
+          "municipio": "JESUS MARIA"
+        },
+        {
+          "cod_muni": 68370,
+          "municipio": "JORDAN"
+        },
+        {
+          "cod_muni": 68377,
+          "municipio": "LA BELLEZA"
+        },
+        {
+          "cod_muni": 68397,
+          "municipio": "LA PAZ"
+        },
+        {
+          "cod_muni": 68385,
+          "municipio": "LANDAZURI"
+        },
+        {
+          "cod_muni": 68406,
+          "municipio": "LEBRIJA"
+        },
+        {
+          "cod_muni": 68418,
+          "municipio": "LOS SANTOS"
+        },
+        {
+          "cod_muni": 68432,
+          "municipio": "MALAGA"
+        },
+        {
+          "cod_muni": 68444,
+          "municipio": "MATANZA"
+        },
+        {
+          "cod_muni": 68464,
+          "municipio": "MOGOTES"
+        },
+        {
+          "cod_muni": 68468,
+          "municipio": "MOLAGAVITA"
+        },
+        {
+          "cod_muni": 68498,
+          "municipio": "OCAMONTE"
+        },
+        {
+          "cod_muni": 68500,
+          "municipio": "OIBA"
+        },
+        {
+          "cod_muni": 68502,
+          "municipio": "ONZAGA"
+        },
+        {
+          "cod_muni": 68522,
+          "municipio": "PALMAR"
+        },
+        {
+          "cod_muni": 68524,
+          "municipio": "PALMAS DEL SOCORRO"
+        },
+        {
+          "cod_muni": 68533,
+          "municipio": "PARAMO"
+        },
+        {
+          "cod_muni": 68547,
+          "municipio": "PIEDECUESTA"
+        },
+        {
+          "cod_muni": 68549,
+          "municipio": "PINCHOTE"
+        },
+        {
+          "cod_muni": 68572,
+          "municipio": "PUENTE NACIONAL"
+        },
+        {
+          "cod_muni": 68573,
+          "municipio": "PUERTO PARRA"
+        },
+        {
+          "cod_muni": 68575,
+          "municipio": "PUERTO WILCHES"
+        },
+        {
+          "cod_muni": 68615,
+          "municipio": "RIONEGRO"
+        },
+        {
+          "cod_muni": 68655,
+          "municipio": "SABANA DE TORRES"
+        },
+        {
+          "cod_muni": 68669,
+          "municipio": "SAN ANDRES"
+        },
+        {
+          "cod_muni": 68673,
+          "municipio": "SAN BENITO"
+        },
+        {
+          "cod_muni": 68679,
+          "municipio": "SAN GIL"
+        },
+        {
+          "cod_muni": 68682,
+          "municipio": "SAN JOAQUIN"
+        },
+        {
+          "cod_muni": 68684,
+          "municipio": "SAN JOSE DE MIRANDA"
+        },
+        {
+          "cod_muni": 68686,
+          "municipio": "SAN MIGUEL"
+        },
+        {
+          "cod_muni": 68689,
+          "municipio": "SAN VICENTE DE CHUCURI"
+        },
+        {
+          "cod_muni": 68705,
+          "municipio": "SANTA BARBARA"
+        },
+        {
+          "cod_muni": 68720,
+          "municipio": "SANTA HELENA DEL OPON"
+        },
+        {
+          "cod_muni": 68745,
+          "municipio": "SIMACOTA"
+        },
+        {
+          "cod_muni": 68755,
+          "municipio": "SOCORRO"
+        },
+        {
+          "cod_muni": 68770,
+          "municipio": "SUAITA"
+        },
+        {
+          "cod_muni": 68773,
+          "municipio": "SUCRE"
+        },
+        {
+          "cod_muni": 68780,
+          "municipio": "SURATA"
+        },
+        {
+          "cod_muni": 68820,
+          "municipio": "TONA"
+        },
+        {
+          "cod_muni": 68855,
+          "municipio": "VALLE DE SAN JOSE"
+        },
+        {
+          "cod_muni": 68861,
+          "municipio": "VELEZ"
+        },
+        {
+          "cod_muni": 68867,
+          "municipio": "VETAS"
+        },
+        {
+          "cod_muni": 68872,
+          "municipio": "VILLANUEVA"
+        },
+        {
+          "cod_muni": 68895,
+          "municipio": "ZAPATOCA"
+        }
+      ],
+      "SUCRE": [
+        {
+          "cod_muni": 70110,
+          "municipio": "BUENAVISTA"
+        },
+        {
+          "cod_muni": 70124,
+          "municipio": "CAIMITO"
+        },
+        {
+          "cod_muni": 70230,
+          "municipio": "CHALAN"
+        },
+        {
+          "cod_muni": 70204,
+          "municipio": "COLOSO"
+        },
+        {
+          "cod_muni": 70215,
+          "municipio": "COROZAL"
+        },
+        {
+          "cod_muni": 70221,
+          "municipio": "COVEÑAS"
+        },
+        {
+          "cod_muni": 70233,
+          "municipio": "EL ROBLE"
+        },
+        {
+          "cod_muni": 70235,
+          "municipio": "GALERAS"
+        },
+        {
+          "cod_muni": 70265,
+          "municipio": "GUARANDA"
+        },
+        {
+          "cod_muni": 70400,
+          "municipio": "LA UNION"
+        },
+        {
+          "cod_muni": 70418,
+          "municipio": "LOS PALMITOS"
+        },
+        {
+          "cod_muni": 70429,
+          "municipio": "MAJAGUAL"
+        },
+        {
+          "cod_muni": 70473,
+          "municipio": "MORROA"
+        },
+        {
+          "cod_muni": 70508,
+          "municipio": "OVEJAS"
+        },
+        {
+          "cod_muni": 70523,
+          "municipio": "PALMITO"
+        },
+        {
+          "cod_muni": 70670,
+          "municipio": "SAMPUES"
+        },
+        {
+          "cod_muni": 70678,
+          "municipio": "SAN BENITO ABAD"
+        },
+        {
+          "cod_muni": 70823,
+          "municipio": "SAN JOSE DE TOLUVIEJO"
+        },
+        {
+          "cod_muni": 70702,
+          "municipio": "SAN JUAN DE BETULIA"
+        },
+        {
+          "cod_muni": 70742,
+          "municipio": "SAN LUIS DE SINCE"
+        },
+        {
+          "cod_muni": 70708,
+          "municipio": "SAN MARCOS"
+        },
+        {
+          "cod_muni": 70713,
+          "municipio": "SAN ONOFRE"
+        },
+        {
+          "cod_muni": 70717,
+          "municipio": "SAN PEDRO"
+        },
+        {
+          "cod_muni": 70820,
+          "municipio": "SANTIAGO DE TOLU"
+        },
+        {
+          "cod_muni": 70001,
+          "municipio": "SINCELEJO"
+        },
+        {
+          "cod_muni": 70771,
+          "municipio": "SUCRE"
+        }
+      ],
+      "TOLIMA": [
+        {
+          "cod_muni": 73024,
+          "municipio": "ALPUJARRA"
+        },
+        {
+          "cod_muni": 73026,
+          "municipio": "ALVARADO"
+        },
+        {
+          "cod_muni": 73030,
+          "municipio": "AMBALEMA"
+        },
+        {
+          "cod_muni": 73043,
+          "municipio": "ANZOATEGUI"
+        },
+        {
+          "cod_muni": 73055,
+          "municipio": "ARMERO"
+        },
+        {
+          "cod_muni": 73067,
+          "municipio": "ATACO"
+        },
+        {
+          "cod_muni": 73124,
+          "municipio": "CAJAMARCA"
+        },
+        {
+          "cod_muni": 73148,
+          "municipio": "CARMEN DE APICALA"
+        },
+        {
+          "cod_muni": 73152,
+          "municipio": "CASABIANCA"
+        },
+        {
+          "cod_muni": 73168,
+          "municipio": "CHAPARRAL"
+        },
+        {
+          "cod_muni": 73200,
+          "municipio": "COELLO"
+        },
+        {
+          "cod_muni": 73217,
+          "municipio": "COYAIMA"
+        },
+        {
+          "cod_muni": 73226,
+          "municipio": "CUNDAY"
+        },
+        {
+          "cod_muni": 73236,
+          "municipio": "DOLORES"
+        },
+        {
+          "cod_muni": 73268,
+          "municipio": "ESPINAL"
+        },
+        {
+          "cod_muni": 73270,
+          "municipio": "FALAN"
+        },
+        {
+          "cod_muni": 73275,
+          "municipio": "FLANDES"
+        },
+        {
+          "cod_muni": 73283,
+          "municipio": "FRESNO"
+        },
+        {
+          "cod_muni": 73319,
+          "municipio": "GUAMO"
+        },
+        {
+          "cod_muni": 73347,
+          "municipio": "HERVEO"
+        },
+        {
+          "cod_muni": 73349,
+          "municipio": "HONDA"
+        },
+        {
+          "cod_muni": 73001,
+          "municipio": "IBAGUE"
+        },
+        {
+          "cod_muni": 73352,
+          "municipio": "ICONONZO"
+        },
+        {
+          "cod_muni": 73408,
+          "municipio": "LERIDA"
+        },
+        {
+          "cod_muni": 73411,
+          "municipio": "LIBANO"
+        },
+        {
+          "cod_muni": 73449,
+          "municipio": "MELGAR"
+        },
+        {
+          "cod_muni": 73461,
+          "municipio": "MURILLO"
+        },
+        {
+          "cod_muni": 73483,
+          "municipio": "NATAGAIMA"
+        },
+        {
+          "cod_muni": 73504,
+          "municipio": "ORTEGA"
+        },
+        {
+          "cod_muni": 73520,
+          "municipio": "PALOCABILDO"
+        },
+        {
+          "cod_muni": 73547,
+          "municipio": "PIEDRAS"
+        },
+        {
+          "cod_muni": 73555,
+          "municipio": "PLANADAS"
+        },
+        {
+          "cod_muni": 73563,
+          "municipio": "PRADO"
+        },
+        {
+          "cod_muni": 73585,
+          "municipio": "PURIFICACION"
+        },
+        {
+          "cod_muni": 73616,
+          "municipio": "RIOBLANCO"
+        },
+        {
+          "cod_muni": 73622,
+          "municipio": "RONCESVALLES"
+        },
+        {
+          "cod_muni": 73624,
+          "municipio": "ROVIRA"
+        },
+        {
+          "cod_muni": 73671,
+          "municipio": "SALDAÑA"
+        },
+        {
+          "cod_muni": 73675,
+          "municipio": "SAN ANTONIO"
+        },
+        {
+          "cod_muni": 73678,
+          "municipio": "SAN LUIS"
+        },
+        {
+          "cod_muni": 73443,
+          "municipio": "SAN SEBASTIAN DE MARIQUITA"
+        },
+        {
+          "cod_muni": 73686,
+          "municipio": "SANTA ISABEL"
+        },
+        {
+          "cod_muni": 73770,
+          "municipio": "SUAREZ"
+        },
+        {
+          "cod_muni": 73854,
+          "municipio": "VALLE DE SAN JUAN"
+        },
+        {
+          "cod_muni": 73861,
+          "municipio": "VENADILLO"
+        },
+        {
+          "cod_muni": 73870,
+          "municipio": "VILLAHERMOSA"
+        },
+        {
+          "cod_muni": 73873,
+          "municipio": "VILLARRICA"
+        }
+      ],
+      "VALLE DEL CAUCA": [
+        {
+          "cod_muni": 76020,
+          "municipio": "ALCALA"
+        },
+        {
+          "cod_muni": 76036,
+          "municipio": "ANDALUCIA"
+        },
+        {
+          "cod_muni": 76041,
+          "municipio": "ANSERMANUEVO"
+        },
+        {
+          "cod_muni": 76054,
+          "municipio": "ARGELIA"
+        },
+        {
+          "cod_muni": 76100,
+          "municipio": "BOLIVAR"
+        },
+        {
+          "cod_muni": 76109,
+          "municipio": "BUENAVENTURA"
+        },
+        {
+          "cod_muni": 76113,
+          "municipio": "BUGALAGRANDE"
+        },
+        {
+          "cod_muni": 76122,
+          "municipio": "CAICEDONIA"
+        },
+        {
+          "cod_muni": 76001,
+          "municipio": "CALI"
+        },
+        {
+          "cod_muni": 76126,
+          "municipio": "CALIMA"
+        },
+        {
+          "cod_muni": 76130,
+          "municipio": "CANDELARIA"
+        },
+        {
+          "cod_muni": 76147,
+          "municipio": "CARTAGO"
+        },
+        {
+          "cod_muni": 76233,
+          "municipio": "DAGUA"
+        },
+        {
+          "cod_muni": 76243,
+          "municipio": "EL AGUILA"
+        },
+        {
+          "cod_muni": 76246,
+          "municipio": "EL CAIRO"
+        },
+        {
+          "cod_muni": 76248,
+          "municipio": "EL CERRITO"
+        },
+        {
+          "cod_muni": 76250,
+          "municipio": "EL DOVIO"
+        },
+        {
+          "cod_muni": 76275,
+          "municipio": "FLORIDA"
+        },
+        {
+          "cod_muni": 76306,
+          "municipio": "GINEBRA"
+        },
+        {
+          "cod_muni": 76318,
+          "municipio": "GUACARI"
+        },
+        {
+          "cod_muni": 76111,
+          "municipio": "GUADALAJARA DE BUGA"
+        },
+        {
+          "cod_muni": 76364,
+          "municipio": "JAMUNDI"
+        },
+        {
+          "cod_muni": 76377,
+          "municipio": "LA CUMBRE"
+        },
+        {
+          "cod_muni": 76400,
+          "municipio": "LA UNION"
+        },
+        {
+          "cod_muni": 76403,
+          "municipio": "LA VICTORIA"
+        },
+        {
+          "cod_muni": 76497,
+          "municipio": "OBANDO"
+        },
+        {
+          "cod_muni": 76520,
+          "municipio": "PALMIRA"
+        },
+        {
+          "cod_muni": 76563,
+          "municipio": "PRADERA"
+        },
+        {
+          "cod_muni": 76606,
+          "municipio": "RESTREPO"
+        },
+        {
+          "cod_muni": 76616,
+          "municipio": "RIOFRIO"
+        },
+        {
+          "cod_muni": 76622,
+          "municipio": "ROLDANILLO"
+        },
+        {
+          "cod_muni": 76670,
+          "municipio": "SAN PEDRO"
+        },
+        {
+          "cod_muni": 76736,
+          "municipio": "SEVILLA"
+        },
+        {
+          "cod_muni": 76823,
+          "municipio": "TORO"
+        },
+        {
+          "cod_muni": 76828,
+          "municipio": "TRUJILLO"
+        },
+        {
+          "cod_muni": 76834,
+          "municipio": "TULUA"
+        },
+        {
+          "cod_muni": 76845,
+          "municipio": "ULLOA"
+        },
+        {
+          "cod_muni": 76863,
+          "municipio": "VERSALLES"
+        },
+        {
+          "cod_muni": 76869,
+          "municipio": "VIJES"
+        },
+        {
+          "cod_muni": 76890,
+          "municipio": "YOTOCO"
+        },
+        {
+          "cod_muni": 76892,
+          "municipio": "YUMBO"
+        },
+        {
+          "cod_muni": 76895,
+          "municipio": "ZARZAL"
+        }
+      ],
+      "VAUPES": [
+        {
+          "cod_muni": 97161,
+          "municipio": "CARURU"
+        },
+        {
+          "cod_muni": 97001,
+          "municipio": "MITU"
+        },
+        {
+          "cod_muni": 97511,
+          "municipio": "PACOA"
+        },
+        {
+          "cod_muni": 97666,
+          "municipio": "TARAIRA"
+        }
+      ],
+      "VICHADA": [
+        {
+          "cod_muni": 99773,
+          "municipio": "CUMARIBO"
+        },
+        {
+          "cod_muni": 99524,
+          "municipio": "LA PRIMAVERA"
+        },
+        {
+          "cod_muni": 99001,
+          "municipio": "PUERTO CARREÑO"
+        },
+        {
+          "cod_muni": 99624,
+          "municipio": "SANTA ROSALIA"
+        }
+      ]
+    },
+    "zonas": [
+      "RURAL",
+      "URBANA"
+    ],
+    "sexos": [
+      "FEMENINO",
+      "MASCULINO",
+      "SIN DATO"
+    ],
+    "armas": [
+      "Arma blanca",
+      "Arma de fuego",
+      "Asfixia mecánica",
+      "Contundente",
+      "Explosivos",
+      "Fuego y sustancias",
+      "No reportado",
+      "Sin arma"
+    ]
+  },
+  "fecha_entrenamiento": "2026-11-13T16:51:24+00:00",
+  "versiones": {
+    "scikit-learn": "1.5.2",
+    "pandas": "2.2.3",
+    "numpy": "2.1.3"
+  }
+}

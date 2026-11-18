@@ -1,0 +1,40 @@
+# ---------------------------------------------------------------
+# Credenciales: el .env real NUNCA se sube (solo .env.example)
+# ---------------------------------------------------------------
+.env
+
+# ---------------------------------------------------------------
+# Datos crudos (~400 MB): no se suben; los descarga
+# src/descargar_datos.py (o el servicio pipeline de Docker)
+# ---------------------------------------------------------------
+data/raw/*
+!data/raw/.gitkeep
+
+# ---------------------------------------------------------------
+# Modelo entrenado (76 MB, cerca del límite de 100 MB de GitHub):
+# el pipeline lo vuelve a entrenar en el primer `docker compose up`.
+# Sí se suben los metadatos (métricas, comparación, importancias).
+# ---------------------------------------------------------------
+models/*.joblib
+
+# ---------------------------------------------------------------
+# Python / Jupyter / Spark
+# ---------------------------------------------------------------
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+spark-warehouse/
+metastore_db/
+derby.log
+
+# ---------------------------------------------------------------
+# Editor y sistema operativo (OneDrive y Windows crean estos)
+# ---------------------------------------------------------------
+.vscode/
+.idea/
+desktop.ini
+Thumbs.db
+.DS_Store
+~$*
